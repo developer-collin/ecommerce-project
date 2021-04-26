@@ -1,3 +1,5 @@
+import { Link, useLocation } from 'react-router-dom';
+
 import CollectionItem from '../collection-item/collection-item.component';
 
 import {
@@ -6,9 +8,16 @@ import {
   PreviewContainer
 } from './collection-preview.styles';
 
-const CollectionPreview = ({ title, items }) => (
+const CollectionPreview = ({ title, items, routeName }) => {
+  const location = useLocation();
+
+  return (
   <CollectionPreviewContainer>
-    <TitleContainer>{title.toUpperCase()}</TitleContainer>
+    <TitleContainer>
+      <Link to={`${location.pathname}/${routeName}`}>
+        {title.toUpperCase()}
+      </Link>
+    </TitleContainer>
     <PreviewContainer>
       {
         items
@@ -19,6 +28,6 @@ const CollectionPreview = ({ title, items }) => (
       }
     </PreviewContainer>
   </CollectionPreviewContainer>
-);
+)};
 
 export default CollectionPreview;
