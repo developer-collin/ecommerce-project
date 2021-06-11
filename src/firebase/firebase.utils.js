@@ -38,6 +38,18 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
+export const getUserCartRef = async (userId) => {
+  const cartRef = firestore.collection(`users/${userId}/cart`);
+  const cartSnapshot = await cartRef.get();
+  
+  if(cartSnapshot.empty) {
+    const cartDocRef = firestore.collection(`users/${userId}/cart`).doc();
+    return cartDocRef;
+  } else {
+    return cartSnapshot.docs[0].ref;
+  }
+}
+
 /*
  *  Used to add new collections and documents to Firebase
  */
