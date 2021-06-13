@@ -29,7 +29,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         email,
         createdAt,
         ...additionalData
-      })
+      });
     } catch(error) {
       console.log('error creating user', error.message);
     }
@@ -41,9 +41,19 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 export const getUserCartRef = async (userId) => {
   const cartRef = firestore.collection(`users/${userId}/cart`);
   const cartSnapshot = await cartRef.get();
-  
+
   if(cartSnapshot.empty) {
     const cartDocRef = firestore.collection(`users/${userId}/cart`).doc();
+
+    try {
+      await cartDocRef.set({
+        id: Math.random(),
+        cartItems: []
+      });
+    } catch(error) {
+      console.log('error creating cart', error.message);
+    }
+
     return cartDocRef;
   } else {
     return cartSnapshot.docs[0].ref;

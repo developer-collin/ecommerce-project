@@ -4,8 +4,8 @@ import UserActionTypes from '../user/user.types';
 import { selectCurrentUser } from '../user/user.selectors';
 
 import CartActionTypes from './cart.types';
-import { clearCart, setCartFromFirebase } from './cart.actions';
-import { selectCartItems } from './cart.selectors';
+import { addItem, clearCart, setCartFromFirebase } from './cart.actions';
+import { selectCartId, selectCartItems } from './cart.selectors';
 
 import { getUserCartRef } from '../../firebase/firebase.utils';
 
@@ -20,21 +20,34 @@ export function* updateCartInFirebase() {
     try {
       const cartRef = yield getUserCartRef(currentUser.id);
       const cartItems = yield select(selectCartItems);
-      yield cartRef.set({cartItems});
+      const currentCartId = yield select(selectCartId);
+      yield cartRef.set({
+        id: currentCartId,
+        cartItems
+      });
     } catch(error) {
       console.log(error);
     }
   }
 }
 
-export function* checkForCartInFirebase() {
+export function* mergeCartWithFirebase() {
   const currentUser = yield select(selectCurrentUser);
+  const currentCartId = yield select(selectCartId);
 
   try {
+    const loggedOutCartItems = yield select(selectCartItems);
     const cartRef = yield getUserCartRef(currentUser.id);
     const cartSnapshot = yield cartRef.get();
-    yield put(setCartFromFirebase(cartSnapshot.data().cartItems));
+    const cartData = yield cartSnapshot.data();
 
+    yield put(setCartFromFirebase(cartData.cartItems));
+
+    if(currentCartId !== cartData.id) {
+      for(let i = 0; i < loggedOutCartItems.length; i++) {
+        yield put(addItem(loggedOutCartItems[i]));
+      }
+    }
   } catch(error) {
     console.log(error);
   }
@@ -53,7 +66,7 @@ export function* onSignOutSuccess() {
 }
 
 export function* onSignInSuccess() {
-  yield takeLatest(UserActionTypes.SIGN_IN_SUCCESS, checkForCartInFirebase);
+  yield takeLatest(UserActionTypes.SIGN_IN_SUCCESS, mergeCartWithFirebase);
 }
 
 export function* cartSagas() {
