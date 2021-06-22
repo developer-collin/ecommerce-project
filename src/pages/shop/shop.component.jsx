@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -8,7 +8,7 @@ import CollectionsOverviewContainer from '../../components/collections-overview/
 import CollectionPageContainer from '../../pages/collection/collection.container';
 
 const ShopPage = ({ fetchCollectionsStart, match }) => {
-  useEffect(() => {
+  useLayoutEffect(() => {
     fetchCollectionsStart();
   }, [fetchCollectionsStart]);
 
