@@ -12,7 +12,9 @@ import {
 } from './collection-item.styles';
 
 const CollectionItem = ({ item, addItem }) => {
-  const { name, price, imageUrl } = item;
+  const { name, price, imageFilename } = item;
+  const imageUrl = require(`../../assets/shop/${imageFilename}`).default;
+
   return (
     <CollectionItemContainer>
       <BackgroundImage imageUrl={imageUrl} />

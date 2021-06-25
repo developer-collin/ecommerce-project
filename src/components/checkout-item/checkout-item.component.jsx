@@ -11,7 +11,9 @@ import {
 } from './checkout-item.styles';
 
 const CheckoutItem = ({ cartItem, addItem, removeItem, clearItem }) => {
-  const {id, name, imageUrl, price, quantity} = cartItem;
+  const {id, name, imageFilename, price, quantity} = cartItem;
+  const imageUrl = require(`../../assets/shop/${imageFilename}`).default;
+
   return (
     <CheckoutItemContainer>
       <ImageContainer>

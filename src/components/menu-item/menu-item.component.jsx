@@ -8,17 +8,21 @@ import {
   ContentSubtitle
 } from './menu-item.styles';
 
-const MenuItem = ({ title, imageUrl, size, history, linkUrl, match }) => (
-  <MenuItemContainer
-    size={size}
-    onClick={() => history.push(`${match.url}${linkUrl}`)}
-  >
-    <BackgroundImageContainer imageUrl={imageUrl} />
-    <ContentContainer>
-      <ContentTitle>{title}</ContentTitle>
-      <ContentSubtitle>Shop now</ContentSubtitle>
-    </ContentContainer>
-  </MenuItemContainer>
-);
+const MenuItem = ({ title, imageFilename, size, history, linkUrl, match }) => {
+  const imageUrl = require(`../../assets/shop/${imageFilename}`).default;
+
+  return (
+    <MenuItemContainer
+      size={size}
+      onClick={() => history.push(`${match.url}${linkUrl}`)}
+    >
+      <BackgroundImageContainer imageUrl={imageUrl} />
+      <ContentContainer>
+        <ContentTitle>{title}</ContentTitle>
+        <ContentSubtitle>Shop now</ContentSubtitle>
+      </ContentContainer>
+    </MenuItemContainer>
+  );
+};
 
 export default withRouter(MenuItem);
