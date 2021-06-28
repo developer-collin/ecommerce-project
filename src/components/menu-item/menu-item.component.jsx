@@ -1,5 +1,7 @@
 import { withRouter } from 'react-router-dom';
 
+import { getShopImageUrl } from '../utils/images';
+
 import {
   MenuItemContainer,
   BackgroundImageContainer,
@@ -9,7 +11,7 @@ import {
 } from './menu-item.styles';
 
 const MenuItem = ({ title, imageFilename, size, history, linkUrl, match }) => {
-  const imageUrl = require(`../../assets/shop/${imageFilename}`).default;
+  const imageUrl = getShopImageUrl(imageFilename);
 
   return (
     <MenuItemContainer

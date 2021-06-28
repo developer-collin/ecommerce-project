@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
 
+import { getShopImageUrl } from '../utils/images';
+
 import { addItem } from '../../redux/cart/cart.actions';
 
 import {
@@ -13,7 +15,7 @@ import {
 
 const CollectionItem = ({ item, addItem }) => {
   const { name, price, imageFilename } = item;
-  const imageUrl = require(`../../assets/shop/${imageFilename}`).default;
+  const imageUrl = getShopImageUrl(imageFilename);
 
   return (
     <CollectionItemContainer>

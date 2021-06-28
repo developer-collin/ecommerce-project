@@ -57,6 +57,7 @@ export function* onCartChange() {
   yield takeLatest([
     CartActionTypes.ADD_ITEM,
     CartActionTypes.REMOVE_ITEM,
+    CartActionTypes.UPDATE_ITEM_QUANTITY,
     CartActionTypes.CLEAR_ITEM_FROM_CART
   ], updateCartInFirebase);
 }

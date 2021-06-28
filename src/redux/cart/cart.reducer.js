@@ -1,5 +1,5 @@
 import CartActionTypes from './cart.types';
-import { addItemToCart, removeItemFromCart } from './cart.utils';
+import { addItemToCart, removeItemFromCart, updateItemQuantityInCart } from './cart.utils';
 
 const INITIAL_STATE = {
   hidden: true,
@@ -26,6 +26,13 @@ const cartReducer = (state = INITIAL_STATE, action) => {
         cartItems: removeItemFromCart(state.cartItems, action.payload),
         id: Math.random()
       };
+    case CartActionTypes.UPDATE_ITEM_QUANTITY:
+      const { item, quantity } = action.payload;
+      return {
+        ...state,
+        cartItems: updateItemQuantityInCart(state.cartItems, item, quantity),
+        id: Math.random()
+      }
     case CartActionTypes.CLEAR_ITEM_FROM_CART:
       return {
         ...state,

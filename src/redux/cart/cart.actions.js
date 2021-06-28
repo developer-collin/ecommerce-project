@@ -14,6 +14,11 @@ export const removeItem = item => ({
   payload: item
 });
 
+export const updateItemQuantity = (item, quantity) => ({
+  type: CartActionTypes.UPDATE_ITEM_QUANTITY,
+  payload: { item, quantity }
+});
+
 export const clearItemFromCart = itemId => ({
   type: CartActionTypes.CLEAR_ITEM_FROM_CART,
   payload: itemId

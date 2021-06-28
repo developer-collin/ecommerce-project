@@ -1,5 +1,7 @@
 import { memo } from 'react';
 
+import { getShopImageUrl } from '../utils/images';
+
 import {
   CartItemContainer,
   CartItemImage,
@@ -7,7 +9,7 @@ import {
 } from './cart-item.styles';
 
 const CartItem = ({ item: { imageFilename, price, name, quantity } }) => {
-  const imageUrl = require(`../../assets/shop/${imageFilename}`).default;
+  const imageUrl = getShopImageUrl(imageFilename);
 
   return (
     <CartItemContainer>

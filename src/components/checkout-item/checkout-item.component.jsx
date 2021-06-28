@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 
-import { addItem, removeItem, clearItemFromCart } from '../../redux/cart/cart.actions';
+import { getShopImageUrl } from '../utils/images';
+
+import { updateItemQuantity, clearItemFromCart } from '../../redux/cart/cart.actions';
 
 import {
   CheckoutItemContainer,
@@ -10,9 +12,20 @@ import {
   RemoveButtonContainer
 } from './checkout-item.styles';
 
-const CheckoutItem = ({ cartItem, addItem, removeItem, clearItem }) => {
+const CheckoutItem = ({ cartItem, updateItemQuantity, clearItem }) => {
   const {id, name, imageFilename, price, quantity} = cartItem;
-  const imageUrl = require(`../../assets/shop/${imageFilename}`).default;
+  const imageUrl = getShopImageUrl(imageFilename);
+
+  const quantityOptions = currentQuantity => {
+    const options = [];
+    for(let i = currentQuantity + 5; i > 0; i--) {
+      options.push(
+        <option key={i} value={i}>{i}</option>
+      );
+    }
+    options.push(<option key='0' value='0'>0 (remove)</option>);
+    return options;
+  };
 
   return (
     <CheckoutItemContainer>
@@ -21,11 +34,13 @@ const CheckoutItem = ({ cartItem, addItem, removeItem, clearItem }) => {
       </ImageContainer>
       <TextContainer>{name}</TextContainer>
       <QuantityContainer>
-        <div className='arrow' onClick={() => removeItem(id)}>&#10094;</div>
-        <span className='value'>
-          {quantity}
-        </span>
-        <div className='arrow' onClick={() => addItem(cartItem)}>&#10095;</div>
+        <select
+          name='quantity-dropdown'
+          value={quantity}
+          onChange={e => updateItemQuantity(cartItem, parseInt(e.target.value, 10))}
+        >
+          { quantityOptions(quantity) }
+        </select>
       </QuantityContainer>
       <TextContainer>{price}</TextContainer>
       <RemoveButtonContainer onClick={() => clearItem(id)}>
@@ -36,8 +51,7 @@ const CheckoutItem = ({ cartItem, addItem, removeItem, clearItem }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  addItem: item => dispatch(addItem(item)),
-  removeItem: itemId => dispatch(removeItem(itemId)),
+  updateItemQuantity: (item, quantity) => dispatch(updateItemQuantity(item, quantity)),
   clearItem: itemId => dispatch(clearItemFromCart(itemId))
 });
 
