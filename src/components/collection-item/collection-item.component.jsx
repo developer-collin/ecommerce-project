@@ -16,10 +16,13 @@ import {
 const CollectionItem = ({ item, addItem }) => {
   const { name, price, imageFilename } = item;
   const imageUrl = getShopImageUrl(imageFilename);
-
   return (
     <CollectionItemContainer>
-      <BackgroundImage imageUrl={imageUrl} />
+      <BackgroundImage
+        imageUrl = {imageUrl}
+        role = 'img'
+        aria-label = {name}
+      />
       <CollectionFooterContainer>
         <NameContainer>{name}</NameContainer>
         <PriceContainer>{price}</PriceContainer>

@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 
 import rootReducer from '../../redux/root-reducer';
 
+// https://slawkolodziej.com/posts/guide-testing-redux-connected-components-with-react-testing-library-and-jest
 export const renderWithState = (
   ui,
   { initialState, ...renderOptions } = {}
