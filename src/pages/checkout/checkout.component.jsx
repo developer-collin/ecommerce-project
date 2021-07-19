@@ -45,6 +45,11 @@ const CheckoutPage = ({ cartItems, cartTotal }) => (
       4242 4242 4242 4242 -  Exp: 01/24 - CVV: 123
     </WarningContainer>
     <StripeCheckoutButton price={cartTotal} />
+    <form action={`${process.env.REACT_APP_POST_DOMAIN}/create-checkout-session/`} method="POST">
+      <button type="submit">
+        Stripe Checkout
+      </button>
+    </form>
   </CheckoutPageContainer>
 );
 
