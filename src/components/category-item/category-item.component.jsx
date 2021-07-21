@@ -5,32 +5,32 @@ import { getShopImageUrl } from '../utils/images';
 import { addItem } from '../../redux/cart/cart.actions';
 
 import {
-  CollectionItemContainer,
-  CollectionFooterContainer,
+  CategoryItemContainer,
+  CategoryFooterContainer,
   AddButton,
   BackgroundImage,
   NameContainer,
   PriceContainer
-} from './collection-item.styles';
+} from './category-item.styles';
 
-const CollectionItem = ({ item, addItem }) => {
+const CategoryItem = ({ item, addItem }) => {
   const { name, price, imageFilename } = item;
   const imageUrl = getShopImageUrl(imageFilename);
   return (
-    <CollectionItemContainer>
+    <CategoryItemContainer>
       <BackgroundImage
         imageUrl = {imageUrl}
         role = 'img'
         aria-label = {name}
       />
-      <CollectionFooterContainer>
+      <CategoryFooterContainer>
         <NameContainer>{name}</NameContainer>
         <PriceContainer>{price}</PriceContainer>
-      </CollectionFooterContainer>
+      </CategoryFooterContainer>
       <AddButton onClick={() => addItem(item)} inverted>
         Add to cart
       </AddButton>
-    </CollectionItemContainer>
+    </CategoryItemContainer>
   );
 };
 
@@ -38,4 +38,4 @@ const mapDispatchToProps = (dispatch) => ({
   addItem: (item) => dispatch(addItem(item)),
 });
 
-export default connect(null, mapDispatchToProps)(CollectionItem);
+export default connect(null, mapDispatchToProps)(CategoryItem);

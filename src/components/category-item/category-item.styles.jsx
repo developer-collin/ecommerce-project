@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import CustomButton from '../custom-button/custom-button.component';
 
-export const CollectionItemContainer = styled.div`
+export const CategoryItemContainer = styled.div`
   width: 22vw;
   display: flex;
   flex-direction: column;
@@ -56,7 +56,7 @@ export const BackgroundImage = styled.div`
   background-image: ${({ imageUrl }) => `url(${imageUrl})`};
 `;
 
-export const CollectionFooterContainer = styled.div`
+export const CategoryFooterContainer = styled.div`
   width: 100%;
   height: 5%;
   display: flex;

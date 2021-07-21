@@ -4,29 +4,29 @@ import { createSelector } from 'reselect';
 
 const selectShop = state => state.shop;
 
-export const selectCollections = createSelector(
+export const selectCategories = createSelector(
   [selectShop],
-  shop => shop.collections
+  shop => shop.categories
 );
 
-export const selectCollectionsForPreview = createSelector(
-  [selectCollections],
-  collections => collections ? Object.values(collections) : []
+export const selectCategoriesForPreview = createSelector(
+  [selectCategories],
+  categories => categories ? Object.values(categories) : []
 );
 
-export const selectCollection = memoize(collectionUrlParam =>
+export const selectCategory = memoize(categoryUrlParam =>
   createSelector(
-    [selectCollections],
-    collections => collections ? collections[collectionUrlParam] : null
+    [selectCategories],
+    categories => categories ? categories[categoryUrlParam] : null
   )
 );
 
-export const selectIsCollectionFetching = createSelector(
+export const selectIsShopFetching = createSelector(
   [selectShop],
   shop => shop.isFetching
 );
 
-export const selectIsCollectionsLoaded = createSelector(
+export const selectAreCategoriesLoaded = createSelector(
   [selectShop],
-  shop => !!shop.collections
+  shop => !!shop.categories
 );

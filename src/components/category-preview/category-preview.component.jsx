@@ -1,21 +1,21 @@
 import { Link, useLocation } from 'react-router-dom';
 
-import CollectionItem from '../collection-item/collection-item.component';
+import CategoryItem from '../category-item/category-item.component';
 
 import {
-  CollectionPreviewContainer,
+  CategoryPreviewContainer,
   TitleContainer,
   PreviewContainer
-} from './collection-preview.styles';
+} from './category-preview.styles';
 
-const CollectionPreview = ({ title, items, routeName }) => {
+const CategoryPreview = ({ title, items, routeName }) => {
   const location = useLocation();
 
   return (
-  <CollectionPreviewContainer>
+  <CategoryPreviewContainer>
     <TitleContainer>
       <Link to={`${location.pathname}/${routeName}`}>
-        {title.toUpperCase()}
+        {title}
       </Link>
     </TitleContainer>
     <PreviewContainer>
@@ -23,11 +23,11 @@ const CollectionPreview = ({ title, items, routeName }) => {
         items
           .filter((item, index) => index < 4)
           .map(item => (
-            <CollectionItem key={item.id} item={item} />
+            <CategoryItem key={item.id} item={item} />
           ))
       }
     </PreviewContainer>
-  </CollectionPreviewContainer>
+  </CategoryPreviewContainer>
 )};
 
-export default CollectionPreview;
+export default CategoryPreview;

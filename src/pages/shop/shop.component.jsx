@@ -2,32 +2,32 @@ import { useLayoutEffect } from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { fetchCollectionsStart } from '../../redux/shop/shop.actions';
+import { fetchProductsStart } from '../../redux/shop/shop.actions';
 
-import CollectionsOverviewContainer from '../../components/collections-overview/collections-overview.container';
-import CollectionPageContainer from '../../pages/collection/collection.container';
+import CategoriesOverviewContainer from '../../components/categories-overview/categories-overview.container';
+import CategoryPageContainer from '../../pages/category/category.container';
 
-const ShopPage = ({ fetchCollectionsStart, match }) => {
+const ShopPage = ({ fetchProductsStart, match }) => {
   useLayoutEffect(() => {
-    fetchCollectionsStart();
-  }, [fetchCollectionsStart]);
+    fetchProductsStart();
+  }, [fetchProductsStart]);
 
   return (
     <div>
       <Route
         exact
         path={`${match.path}`}
-        component={CollectionsOverviewContainer}
+        component={CategoriesOverviewContainer}
       />
       <Route
-        path={`${match.path}/:collectionId`}
-        component={CollectionPageContainer} />
+        path={`${match.path}/:categoryTitle`}
+        component={CategoryPageContainer} />
     </div>
   );
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchCollectionsStart: () => dispatch(fetchCollectionsStart())
+  fetchProductsStart: () => dispatch(fetchProductsStart())
 });
 
 export default connect(null, mapDispatchToProps)(ShopPage);

@@ -47,7 +47,7 @@ export const getUserCartRef = async (userId) => {
 
     try {
       await cartDocRef.set({
-        id: Math.random(),
+        id: Date.now(),
         cartItems: []
       });
     } catch(error) {
@@ -76,21 +76,31 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
   await batch.commit();
 };
 
-export const convertCollectionsSnapshotToMap = collections => {
-  const transformedCollection = collections.docs.map(doc => {
-    const { title, items } = doc.data();
-    return {
-      routeName: encodeURI(title.toLowerCase()),
-      id: doc.id,
-      title,
-      items
-    };
+export const convertProductsToCategoryMap = products => {
+  let categoriesMap = {};
+
+  products.docs.forEach(doc => {
+    const { categories, id, imageFilename, lastUpdate, name, price } = doc.data();
+    categories.forEach(cat => {
+      const category = cat.toLowerCase();
+      if(!categoriesMap[category]) {
+        categoriesMap[category] = {
+          title: cat,
+          items: [],
+          routeName: encodeURI(category)
+        };
+      }
+      categoriesMap[category].items.push({
+        id,
+        name,
+        imageFilename,
+        price,
+        lastUpdate
+      });
+    });
   });
-  
-  return transformedCollection.reduce((accumulator, collection) => {
-    accumulator[collection.title.toLowerCase()] = collection;
-    return accumulator;
-  }, {});
+
+  return categoriesMap;
 };
 
 firebase.initializeApp(config);

@@ -24,6 +24,10 @@ exports.addMessage = functions.https.onRequest(async (req, res) => {
   res.json({result: `Message with ID: ${writeResult.id} added.`});
 });
 
+// const createLineItems = () => {
+//   admin.firestore().collection('products')
+// }
+
 app.post('/create-checkout-session', async (req, res) => {
   console.log('POST TEST', 'POST TEST2', 'POST TEST3');
   const session = await stripe.checkout.sessions.create({

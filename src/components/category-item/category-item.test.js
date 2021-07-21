@@ -1,9 +1,9 @@
 import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { renderWithState } from '../utils/testing';
-import CollectionItem from './collection-item.component';
+import CategoryItem from './category-item.component';
 
-describe('CollectionItem component', () => {
+describe('CategoryItem component', () => {
   const mockImageFilename = 'whatever.png';
   const mockName = 'Blue hat';
   const mockPrice = 20;
@@ -17,7 +17,7 @@ describe('CollectionItem component', () => {
       }
     };
 
-    renderWithState(<CollectionItem {...mockProps} />);
+    renderWithState(<CategoryItem {...mockProps} />);
   });
 
   it('should render', () => {

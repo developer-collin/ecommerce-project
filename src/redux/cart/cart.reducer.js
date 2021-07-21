@@ -18,20 +18,20 @@ const cartReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         cartItems: addItemToCart(state.cartItems, action.payload),
-        id: Math.random()
+        id: Date.now()
       };
     case CartActionTypes.REMOVE_ITEM:
       return {
         ...state,
         cartItems: removeItemFromCart(state.cartItems, action.payload),
-        id: Math.random()
+        id: Date.now()
       };
     case CartActionTypes.UPDATE_ITEM_QUANTITY:
       const { item, quantity } = action.payload;
       return {
         ...state,
         cartItems: updateItemQuantityInCart(state.cartItems, item, quantity),
-        id: Math.random()
+        id: Date.now()
       }
     case CartActionTypes.CLEAR_ITEM_FROM_CART:
       return {
@@ -39,7 +39,7 @@ const cartReducer = (state = INITIAL_STATE, action) => {
         cartItems: state.cartItems.filter(
           cartItem => cartItem.id !== action.payload
         ),
-        id: Math.random()
+        id: Date.now()
       };
     case CartActionTypes.CLEAR_CART:
       return {
