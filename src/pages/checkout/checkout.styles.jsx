@@ -41,3 +41,11 @@ export const WarningContainer = styled.div`
   font-size: 24px;
   color: red;
 `;
+
+export const CheckoutStatusContainer = styled.div`
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  color: red;
+`;

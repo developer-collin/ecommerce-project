@@ -8,6 +8,6 @@ export default function* rootSaga() {
   yield all([
           call(shopSagas),
           call(userSagas),
-          call(cartSagas)
+          call(cartSagas),
         ]);
-}
+};
