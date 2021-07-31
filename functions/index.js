@@ -116,9 +116,18 @@ app.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
   const sig = req.headers['stripe-signature'];
 
   let event;
+  let rawBody;
+
+  if(process.env.FUNCTIONS_EMULATOR === 'true') {
+    rawBody = req.body;
+  } else {
+    // On production, req.rawBody provided by Firebase:
+    // https://firebase.google.com/docs/functions/http-events#read_values_from_the_request
+    rawBody = req.rawBody;
+  }
 
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, webhookEndpointSecret);
+    event = stripe.webhooks.constructEvent(rawBody, sig, webhookEndpointSecret);
   } catch (err) {
     console.log('EVENT WEBHOOKS ERROR', err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
@@ -136,4 +145,10 @@ app.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
   res.status(200).end();
 });
 
-app.listen(5001, () => console.log('Running on port 5001'));
+// Port listening only needed in development, when using Firebase Emulator
+if(process.env.FUNCTIONS_EMULATOR === 'true') {
+  app.listen(5001);
+}
+
+// Expose Express API as a single Cloud Function:
+exports.api = functions.https.onRequest(app);
