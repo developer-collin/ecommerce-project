@@ -26,7 +26,7 @@ const CheckoutPage = ({ currentUser, cartItems, cartTotal }) => {
     // Check to see if this is a redirect back from Stripe Checkout
     const query = new URLSearchParams(window.location.search);
     if (query.get('success')) {
-      setStatusMessage('Order placed! You will receive an email confirmation.');
+      setStatusMessage('Order placed!');
     } else if (query.get('canceled')) {
       setStatusMessage("Order canceled - continue to shop around and checkout when you're ready.");
     }
