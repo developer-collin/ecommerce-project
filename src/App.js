@@ -16,6 +16,8 @@ const HomePage = lazy(() => import('./pages/homepage/homepage.component'));
 const ShopPage = lazy(() => import('./pages/shop/shop.component'));
 const SignInAndSignUp = lazy(() => import('./pages/sign-in-and-sign-up/sign-in-and-sign-up.component'));
 const CheckoutPage = lazy(() => import('./pages/checkout/checkout.component'));
+const OrdersPage = lazy(() => import('./pages/orders/orders.component'));
+const NotFoundPage = lazy(() => import('./pages/not-found/not-found.component'));
 
 const App = ({ checkUserSession, currentUser }) => {
   useLayoutEffect(() => {
@@ -32,6 +34,7 @@ const App = ({ checkUserSession, currentUser }) => {
             <Route exact path='/' component={HomePage} />
             <Route path='/shop' component={ShopPage} />
             <Route exact path='/checkout' component={CheckoutPage} />
+            <Route path='/orders' component={OrdersPage} />
             <Route
               exact
               path='/signin'
@@ -39,6 +42,7 @@ const App = ({ checkUserSession, currentUser }) => {
                 currentUser ? <Redirect to='/' /> : <SignInAndSignUp />
               }
             />
+            <Route component={NotFoundPage} />
           </Switch>
         </Suspense>
       </ErrorBoundary>

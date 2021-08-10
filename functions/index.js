@@ -83,17 +83,17 @@ app.post('/create-checkout-session', async (req, res) => {
       payment_method_types: ['card'],
       line_items: stripeLineItems,
       mode: 'payment',
-      success_url: `${config.env.domain}/checkout?success=true`,
+      success_url: `${config.env.domain}/orders/{CHECKOUT_SESSION_ID}`,
       cancel_url: `${config.env.domain}/checkout?canceled=true`,
     });
 
     const newOrder = admin.firestore().collection(`users/${userId}/orders`).doc(session.id);
-    newOrder.set({
+    await newOrder.set({
       uid: userId,
       cart: cart,
       stripeSession: session,
       stripeLineItems: stripeLineItems,
-      timestamp: Date.now(),
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
       orderComplete: false
     });
 
@@ -103,13 +103,17 @@ app.post('/create-checkout-session', async (req, res) => {
   }
 });
 
-const fulfillOrder = session => {
+const fulfillOrder = async session => {
   const userId = session.client_reference_id;
   const order = admin.firestore().doc(`users/${userId}/orders/${session.id}`);
-  order.update({
-    orderComplete: true,
-    stripeSession: session
-  });
+  try {
+    await order.update({
+      orderComplete: true,
+      stripeSession: session
+    });
+  } catch(error) {
+    console.log('Error fulfilling order after completed checkout', error);
+  }
 };
 
 app.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
@@ -147,6 +151,7 @@ app.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
 
 // Port listening only needed in development, when using Firebase Emulator
 if(process.env.FUNCTIONS_EMULATOR === 'true') {
+  console.log('listening to port 5001');
   app.listen(5001);
 }
 

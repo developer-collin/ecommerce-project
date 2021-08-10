@@ -1,8 +1,8 @@
 import firebase from 'firebase/app';
-import 'firebase/firestore';
 import 'firebase/auth';
+import 'firebase/firestore';
 
-const config = {
+const firebaseConfig = {
   apiKey: "AIzaSyBPRAGNMZ4gc5g_SKlR5XEknN4u-fxnxPs",
   authDomain: "zerotomastery-react.firebaseapp.com",
   databaseURL: "https://zerotomastery-react.firebaseio.com",
@@ -12,6 +12,8 @@ const config = {
   appId: "1:51885256246:web:f4188b1f1e0ecc66f37297",
   measurementId: "G-XQ2143TZGT"
 };
+
+firebase.initializeApp(firebaseConfig);
 
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if(!userAuth) return;
@@ -103,8 +105,6 @@ export const convertProductsToCategoryMap = products => {
   return categoriesMap;
 };
 
-firebase.initializeApp(config);
-
 export const getCurrentUser = () => {
   return new Promise((resolve, reject) => {
     const unsubscribe = auth.onAuthStateChanged(userAuth => {
@@ -116,6 +116,10 @@ export const getCurrentUser = () => {
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+
+if (process.env.NODE_ENV === 'development') {
+  firestore.useEmulator('localhost', 8080);
+}
 
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: 'select_account' });

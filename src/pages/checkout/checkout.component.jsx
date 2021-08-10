@@ -75,7 +75,7 @@ const CheckoutPage = ({ currentUser, cartItems, cartTotal }) => {
         <button type="submit">Checkout</button>
       </form>
     </CheckoutPageContainer>
-  )
+  );
 };
 
 const mapStateToProps = createStructuredSelector({
