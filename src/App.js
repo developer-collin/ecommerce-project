@@ -31,6 +31,9 @@ const App = ({ checkUserSession, currentUser }) => {
       <ErrorBoundary>
         <Suspense fallback={<Spinner />}>
           <Switch>
+            {/* Remove trailing slashes
+              https://github.com/ReactTraining/react-router/issues/4841#issuecomment-821980722 */}
+            <Redirect from="/:url*(/+)" to={window.location.pathname.replace(/\/+$/, window.location.search)} />
             <Route exact path='/' component={HomePage} />
             <Route path='/shop' component={ShopPage} />
             <Route exact path='/checkout' component={CheckoutPage} />
