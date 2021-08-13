@@ -5,7 +5,7 @@ import { selectCurrentUser } from '../user/user.selectors';
 
 import CartActionTypes from './cart.types';
 import { addItem, clearCart, setCartFromFirebase } from './cart.actions';
-import { selectCartId, selectCartItems } from './cart.selectors';
+import { selectCartVersion, selectCartItems } from './cart.selectors';
 
 import { getUserCartRef } from '../../firebase/firebase.utils';
 
@@ -20,9 +20,9 @@ export function* updateCartInFirebase() {
     try {
       const cartRef = yield getUserCartRef(currentUser.id);
       const cartItems = yield select(selectCartItems);
-      const currentCartId = yield select(selectCartId);
+      const currentCartVersion = yield select(selectCartVersion);
       yield cartRef.set({
-        id: currentCartId,
+        version: currentCartVersion,
         cartItems
       });
     } catch(error) {
@@ -33,7 +33,7 @@ export function* updateCartInFirebase() {
 
 export function* mergeCartWithFirebase() {
   const currentUser = yield select(selectCurrentUser);
-  const currentCartId = yield select(selectCartId);
+  const currentCartVersion = yield select(selectCartVersion);
 
   try {
     const loggedOutCartItems = yield select(selectCartItems);
@@ -43,7 +43,7 @@ export function* mergeCartWithFirebase() {
 
     yield put(setCartFromFirebase(cartData.cartItems));
 
-    if(currentCartId !== cartData.id) {
+    if(currentCartVersion !== cartData.version) {
       for(let i = 0; i < loggedOutCartItems.length; i++) {
         yield put(addItem(loggedOutCartItems[i]));
       }

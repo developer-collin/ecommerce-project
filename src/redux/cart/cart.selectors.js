@@ -7,6 +7,11 @@ export const selectCartId = createSelector(
   cart => cart.id
 );
 
+export const selectCartVersion = createSelector(
+  [selectCart],
+  cart => cart.version
+);
+
 export const selectCartItems = createSelector(
   [selectCart],
   cart => cart.cartItems

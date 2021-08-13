@@ -49,7 +49,7 @@ export const getUserCartRef = async (userId) => {
 
     try {
       await cartDocRef.set({
-        id: Date.now(),
+        version: Date.now(),
         cartItems: []
       });
     } catch(error) {
@@ -60,7 +60,7 @@ export const getUserCartRef = async (userId) => {
   } else {
     return cartSnapshot.docs[0].ref;
   }
-}
+};
 
 /*
  *  Used to add new collections and documents to Firebase
@@ -112,7 +112,7 @@ export const getCurrentUser = () => {
       resolve(userAuth);
     }, reject);
   });
-}
+};
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();

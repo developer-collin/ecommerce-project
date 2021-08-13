@@ -80,6 +80,9 @@ app.post('/create-checkout-session', async (req, res) => {
     const stripeLineItems = await asyncCreateStripeLineItems(cart.cartItems);
     const session = await stripe.checkout.sessions.create({
       client_reference_id: userId,
+      metadata: {
+        'cartId': cartRef.id
+      },
       payment_method_types: ['card'],
       line_items: stripeLineItems,
       mode: 'payment',
@@ -119,6 +122,16 @@ const fulfillOrder = async session => {
   }
 };
 
+const deleteCart = async session => {
+  const userId = session.client_reference_id;
+  const cartId = session.metadata.cartId;
+  try {
+    await admin.firestore().doc(`users/${userId}/cart/${cartId}`).delete();
+  } catch(error) {
+    console.log('Error deleting cart after checkout');
+  }
+}
+
 app.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
   const sig = req.headers['stripe-signature'];
 
@@ -143,7 +156,9 @@ app.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
   switch (event.type) {
     case 'checkout.session.completed':
       const session = event.data.object;
-      fulfillOrder(session);
+      fulfillOrder(session).then(
+        deleteCart(session)
+      );
       break;
     default:
       console.log(`Unhandled event type ${event.type}`);

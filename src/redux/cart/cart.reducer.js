@@ -4,7 +4,7 @@ import { addItemToCart, removeItemFromCart, updateItemQuantityInCart } from './c
 const INITIAL_STATE = {
   hidden: true,
   cartItems: [],
-  id: 0
+  version: 0
 };
 
 const cartReducer = (state = INITIAL_STATE, action) => {
@@ -18,20 +18,20 @@ const cartReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         cartItems: addItemToCart(state.cartItems, action.payload),
-        id: Date.now()
+        version: Date.now()
       };
     case CartActionTypes.REMOVE_ITEM:
       return {
         ...state,
         cartItems: removeItemFromCart(state.cartItems, action.payload),
-        id: Date.now()
+        version: Date.now()
       };
     case CartActionTypes.UPDATE_ITEM_QUANTITY:
       const { item, quantity } = action.payload;
       return {
         ...state,
         cartItems: updateItemQuantityInCart(state.cartItems, item, quantity),
-        id: Date.now()
+        version: Date.now()
       }
     case CartActionTypes.CLEAR_ITEM_FROM_CART:
       return {
@@ -39,7 +39,7 @@ const cartReducer = (state = INITIAL_STATE, action) => {
         cartItems: state.cartItems.filter(
           cartItem => cartItem.id !== action.payload
         ),
-        id: Date.now()
+        version: Date.now()
       };
     case CartActionTypes.CLEAR_CART:
       return {
