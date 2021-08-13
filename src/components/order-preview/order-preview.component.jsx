@@ -1,15 +1,15 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 import { formatDate } from '../../components/utils/formatting';
 
 const OrderPreview = ({ order }) => {
-  const location = useLocation();
+  const { url } = useRouteMatch();
   const orderDate = formatDate(order.createdAt);
 
   return (
     <li>
       Order date: 
-      <Link to={`${location.pathname}/${order.id}`}>
+      <Link to={`${url}/${order.id}`}>
         { orderDate }
       </Link>
     </li>

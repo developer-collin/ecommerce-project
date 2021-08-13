@@ -5,15 +5,15 @@ import { compose } from 'redux';
 import { selectAreOrdersLoaded } from '../../redux/orders/orders.selector';
 
 import WithSpinner from '../with-spinner/with-spinner.component';
-import OrderSummary from './order-summary.component';
+import OrderDetails from './order-details.component';
 
 const mapStateToProps = createStructuredSelector({
   isLoading: state => !selectAreOrdersLoaded(state)
 });
 
-const OrderSummaryContainer = compose(
+const OrderDetailsContainer = compose(
   connect(mapStateToProps),
   WithSpinner
-)(OrderSummary);
+)(OrderDetails);
 
-export default OrderSummaryContainer;
+export default OrderDetailsContainer;

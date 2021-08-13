@@ -5,8 +5,14 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+  html {
+    font-size: 62.5%; /* 10px */
+  }
+
   body {
-    font-family: 'Open Sans Condensed';
+    font-family: Arial;
+    font-size: 1.6rem; /* 16px */
+    line-height: 2rem;
     padding: 20px 40px;
 
     @media screen and (max-width: 800px) {
