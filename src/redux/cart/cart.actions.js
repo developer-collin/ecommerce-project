@@ -6,26 +6,31 @@ export const toggleCartHidden = () => ({
 
 export const addItem = item => ({
   type: CartActionTypes.ADD_ITEM,
-  payload: item
+  payload: item,
+  version: Date.now()
 });
 
 export const removeItem = item => ({
   type: CartActionTypes.REMOVE_ITEM,
-  payload: item
+  payload: item,
+  version: Date.now()
 });
 
 export const updateItemQuantity = (item, quantity) => ({
   type: CartActionTypes.UPDATE_ITEM_QUANTITY,
-  payload: { item, quantity }
+  payload: { item, quantity },
+  version: Date.now()
 });
 
 export const clearItemFromCart = itemId => ({
   type: CartActionTypes.CLEAR_ITEM_FROM_CART,
-  payload: itemId
+  payload: itemId,
+  version: Date.now()
 });
 
 export const clearCart = () => ({
-  type: CartActionTypes.CLEAR_CART
+  type: CartActionTypes.CLEAR_CART,
+  version: Date.now()
 });
 
 export const setCartFromFirebase = cartItems => ({

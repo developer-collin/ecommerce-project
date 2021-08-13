@@ -18,20 +18,20 @@ const cartReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         cartItems: addItemToCart(state.cartItems, action.payload),
-        version: Date.now()
+        version: action.version
       };
     case CartActionTypes.REMOVE_ITEM:
       return {
         ...state,
         cartItems: removeItemFromCart(state.cartItems, action.payload),
-        version: Date.now()
+        version: action.version
       };
     case CartActionTypes.UPDATE_ITEM_QUANTITY:
       const { item, quantity } = action.payload;
       return {
         ...state,
         cartItems: updateItemQuantityInCart(state.cartItems, item, quantity),
-        version: Date.now()
+        version: action.version
       }
     case CartActionTypes.CLEAR_ITEM_FROM_CART:
       return {
@@ -39,12 +39,13 @@ const cartReducer = (state = INITIAL_STATE, action) => {
         cartItems: state.cartItems.filter(
           cartItem => cartItem.id !== action.payload
         ),
-        version: Date.now()
+        version: action.version
       };
     case CartActionTypes.CLEAR_CART:
       return {
         ...state,
-        cartItems: []
+        cartItems: [],
+        version: action.version
       };
     case CartActionTypes.SET_CART_FROM_FIREBASE:
       return {

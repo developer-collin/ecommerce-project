@@ -89,7 +89,7 @@ app.post('/create-checkout-session', async (req, res) => {
       shipping_address_collection: {
         allowed_countries: ['US'],
       },
-      success_url: `${config.env.domain}/orders/{CHECKOUT_SESSION_ID}`,
+      success_url: `${config.env.domain}/orders/{CHECKOUT_SESSION_ID}?success=true`,
       cancel_url: `${config.env.domain}/checkout?canceled=true`,
     });
 
