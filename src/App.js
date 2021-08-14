@@ -1,5 +1,7 @@
 import { useLayoutEffect, lazy, Suspense } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import AuthRoute from './components/auth-route/auth-route.component';
+
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -36,15 +38,9 @@ const App = ({ checkUserSession, currentUser }) => {
             <Redirect from="/:url*(/+)" to={window.location.pathname.replace(/\/+$/, window.location.search)} />
             <Route exact path='/' component={HomePage} />
             <Route path='/shop' component={ShopPage} />
-            <Route exact path='/checkout' component={CheckoutPage} />
-            <Route path='/orders' component={OrdersPage} />
-            <Route
-              exact
-              path='/signin'
-              render={() =>
-                currentUser ? <Redirect to='/' /> : <SignInAndSignUp />
-              }
-            />
+            <AuthRoute exact path='/checkout' component={CheckoutPage} />
+            <AuthRoute path='/orders' component={OrdersPage} />
+            <Route exact path='/signin' component={SignInAndSignUp} />
             <Route component={NotFoundPage} />
           </Switch>
         </Suspense>

@@ -17,7 +17,7 @@ const OrderDetails = ({ order, clearCart }) => {
     if (query.get('success')) {
       clearCart();
     }
-  }, []);
+  }, [clearCart]);
 
   if (order) {
     const { amount_subtotal,

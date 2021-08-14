@@ -13,26 +13,29 @@ import { ReactComponent as Logo } from '../../assets/crown.svg';
 
 import { HeaderContainer, LogoContainer, OptionsContainer, OptionLink } from './header.styles';
 
-const Header = ({ currentUser, isCartHidden, signOutStart }) => (
-  <HeaderContainer>
-    <LogoContainer to='/'>
-      <Logo />
-    </LogoContainer>
-    <OptionsContainer>
-      <OptionLink to='/shop'>SHOP</OptionLink>
-      <OptionLink to='/contact'>CONTACT</OptionLink>
-      {
-        currentUser ? 
-        <OptionLink as='div' onClick={signOutStart}>SIGN OUT</OptionLink>
-        :
-        <OptionLink to='/signin'>SIGN IN</OptionLink>
-      }
-      <CartIcon />
-    </OptionsContainer>
+const Header = ({ currentUser, isCartHidden, signOutStart }) => {
+  return (
+    <HeaderContainer>
+      <LogoContainer to='/'>
+        <Logo />
+      </LogoContainer>
+      <OptionsContainer>
+        <OptionLink to='/shop'>SHOP</OptionLink>
+        <OptionLink to='/contact'>CONTACT</OptionLink>
+        {
+          currentUser
+          ? <OptionLink as='div' onClick={signOutStart}>SIGN OUT</OptionLink>
+          : <OptionLink to={{pathname: '/signin', state: { from: window.location.pathname }}}>
+              SIGN IN
+            </OptionLink>
+        }
+        <CartIcon />
+      </OptionsContainer>
 
-    {isCartHidden ? null : <CartDropdown />}
-  </HeaderContainer>
-);
+      {isCartHidden ? null : <CartDropdown />}
+    </HeaderContainer>
+  );
+};
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
@@ -41,6 +44,6 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   signOutStart: () => dispatch(signOutStart())
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
