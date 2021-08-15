@@ -21,7 +21,7 @@ const Header = ({ currentUser, isCartHidden, signOutStart }) => {
       </LogoContainer>
       <OptionsContainer>
         <OptionLink to='/shop'>SHOP</OptionLink>
-        <OptionLink to='/contact'>CONTACT</OptionLink>
+        <OptionLink to='/orders'>ORDERS</OptionLink>
         {
           currentUser
           ? <OptionLink as='div' onClick={signOutStart}>SIGN OUT</OptionLink>
