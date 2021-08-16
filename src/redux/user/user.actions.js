@@ -9,10 +9,16 @@ export const emailSignInStart = emailAndPassword => ({
   payload: emailAndPassword
 });
 
-export const authSuccess = user => ({
-  type: UserActionTypes.AUTH_SUCCESS,
-  payload: user
-});
+export const authSuccess = user => {
+  const serializedCreatedAt = user.createdAt.toDate().toISOString();
+  return ({
+    type: UserActionTypes.AUTH_SUCCESS,
+    user: {
+      ...user,
+      createdAt: serializedCreatedAt
+    }
+  });
+};
 
 export const authFailure = error => ({
   type: UserActionTypes.AUTH_FAILURE,
