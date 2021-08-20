@@ -20,18 +20,18 @@ export const authSuccess = user => {
   });
 };
 
-export const authFailure = error => ({
+export const authFailure = errorMessage => ({
   type: UserActionTypes.AUTH_FAILURE,
-  payload: error
+  payload: errorMessage
 });
 
 export const signInSuccess = () => ({
   type: UserActionTypes.SIGN_IN_SUCCESS,
 });
 
-export const signInFailure = error => ({
+export const signInFailure = errorMessage => ({
   type: UserActionTypes.SIGN_IN_FAILURE,
-  payload: error
+  payload: errorMessage
 });
 
 export const checkUserSession = () => ({
@@ -46,9 +46,9 @@ export const signOutSuccess = () => ({
   type: UserActionTypes.SIGN_OUT_SUCCESS
 });
 
-export const signOutFailure = error => ({
+export const signOutFailure = errorMessage => ({
   type: UserActionTypes.SIGN_OUT_FAILURE,
-  payload: error
+  payload: errorMessage
 });
 
 export const signUpStart = userCredentials => ({
@@ -66,8 +66,7 @@ export const signUpSuccess = ({ userAuth, additionalData }) => {
   })
 };
 
-
-export const signUpFailure = error => ({
+export const signUpFailure = errorMessage => ({
   type: UserActionTypes.SIGN_UP_FAILURE,
-  payload: error
+  payload: errorMessage
 });

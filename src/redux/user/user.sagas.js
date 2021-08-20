@@ -20,7 +20,7 @@ import {
   getCurrentUser
 } from '../../firebase/firebase.utils';
 
-export function* getSnapshotFromUserAuth(userAuth, additionalData) {
+export function* setUserFromUserAuth(userAuth, additionalData) {
   try {
     const userRef = yield call(createUserProfileDocument, userAuth, additionalData);
     const userSnapshot = yield userRef.get();
@@ -28,27 +28,27 @@ export function* getSnapshotFromUserAuth(userAuth, additionalData) {
       authSuccess({ id: userSnapshot.id, ...userSnapshot.data() })
     );
   } catch(error) {
-    yield put(authFailure(error));
+    yield put(authFailure(error.message));
   }
 }
 
 export function* signInWithGoogle() {
   try {
     const { user: userAuth } = yield auth.signInWithPopup(googleProvider);
-    yield getSnapshotFromUserAuth(userAuth);
+    yield setUserFromUserAuth(userAuth);
     yield put(signInSuccess());
   } catch(error) {
-    yield put(signInFailure(error));
+    yield put(signInFailure(error.message));
   }
 }
 
 export function* signInWithEmail({payload: { email, password }}) {
   try {
     const { user: userAuth } = yield auth.signInWithEmailAndPassword(email, password);
-    yield getSnapshotFromUserAuth(userAuth);
+    yield setUserFromUserAuth(userAuth);
     yield put(signInSuccess());
   } catch(error) {
-    yield put(signInFailure(error));
+    yield put(signInFailure(error.message));
   }
 }
 
@@ -56,9 +56,9 @@ export function* isUserAuthenticated() {
   try {
     const userAuth = yield getCurrentUser();
     if (!userAuth) return;
-    yield getSnapshotFromUserAuth(userAuth);
+    yield setUserFromUserAuth(userAuth);
   } catch(error) {
-    yield put(authFailure(error));
+    yield put(authFailure(error.message));
   }
 }
 
@@ -67,7 +67,7 @@ export function* signOut() {
     yield auth.signOut();
     yield put(signOutSuccess());
   } catch(error) {
-    yield put(signOutFailure(error));
+    yield put(signOutFailure(error.message));
   }
 }
 
@@ -81,12 +81,12 @@ export function* signUp({payload: { email, password, displayName }}) {
     yield createUserProfileDocument(userAuth, { displayName });
     yield put(signUpSuccess({ userAuth, additionalData: { displayName } }));
   } catch (error) {
-    yield put(signUpFailure(error));
+    yield put(signUpFailure(error.message));
   }
 }
 
 export function* signInAfterSignUp({payload: { userAuth, additionalData }}) {
-  yield getSnapshotFromUserAuth(userAuth, additionalData);
+  yield setUserFromUserAuth(userAuth, additionalData);
   yield put(signInSuccess());
 }
 

@@ -1,5 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import UserActionTypes from '../redux/user/user.types';
+
 import {
   persistStore,
   FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER
@@ -18,7 +20,10 @@ export const store = configureStore({
     getDefaultMiddleware({
       thunk: false,
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        ignoredActions: [
+          FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER,
+          UserActionTypes.SIGN_UP_SUCCESS
+        ],
       },
     }).concat(logger, sagaMiddleware),
   devTools: process.env.NODE_ENV !== 'production',
