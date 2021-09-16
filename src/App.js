@@ -1,16 +1,18 @@
 import { useLayoutEffect, lazy, Suspense } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import AuthRoute from './components/auth-route/auth-route.component';
+
+import { auth } from './firebase/firebase.utils';
 
 import { connect } from 'react-redux';
 
+import AuthRoute from './components/auth-route/auth-route.component';
 import Header from './components/header/header.component';
 import Spinner from './components/spinner/spinner.component';
 import ErrorBoundary from './components/error-boundary/error-boundary.component';
 
 import GlobalStyle from './global.styles';
 
-import { checkUserSession } from './redux/user/user.actions';
+import { userAuthSuccess } from './redux/user/user.actions';
 
 const HomePage = lazy(() => import('./pages/homepage/homepage.component'));
 const ShopPage = lazy(() => import('./pages/shop/shop.component'));
@@ -19,10 +21,17 @@ const CheckoutPage = lazy(() => import('./pages/checkout/checkout.component'));
 const OrdersPage = lazy(() => import('./pages/orders/orders.component'));
 const NotFoundPage = lazy(() => import('./pages/not-found/not-found.component'));
 
-const App = ({ checkUserSession }) => {
+const App = ({ userAuthSuccess }) => {
   useLayoutEffect(() => {
-    checkUserSession();
-  }, [checkUserSession]);
+    const unsubscribeFromAuth = auth.onAuthStateChanged(userAuth => {
+      if(userAuth) {
+        // Logged in
+        userAuthSuccess(userAuth);
+      }
+    });
+
+    return () => unsubscribeFromAuth();
+  }, [userAuthSuccess]);
 
   return (
     <div>
@@ -48,7 +57,7 @@ const App = ({ checkUserSession }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  checkUserSession: () => dispatch(checkUserSession())
+  userAuthSuccess: userAuth => dispatch(userAuthSuccess(userAuth))
 });
 
 export default connect(null, mapDispatchToProps)(App);

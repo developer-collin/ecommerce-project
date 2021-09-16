@@ -22,7 +22,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [
           FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER,
-          UserActionTypes.SIGN_UP_SUCCESS
+          UserActionTypes.USER_AUTH_SUCCESS
         ],
       },
     }).concat(logger, sagaMiddleware),

@@ -22,17 +22,33 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   const snapShot = await userRef.get();
 
   if(!snapShot.exists) {
-    const { displayName, email } = userAuth;
-
     try {
-      await userRef.set({
-        displayName,
+      let { displayName, email } = userAuth;
+
+      if(additionalData && additionalData.displayName) {
+        displayName = additionalData.displayName;
+      }
+
+      const defaultUserData = {
         email,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        ...additionalData
-      });
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+
+      /*
+       * createUserProfileDocument() may fire twice on signUp, before snapShot.exists
+       *  signUp & userAuthenticated trigger it in quick succession
+       *
+       * Building onto defaultUserData, only include objects with truthy properties
+       *  Firebase's set(), with merge option, will then take care of merging 
+       */
+      const userToCreate = Object.assign(
+        defaultUserData,
+        displayName ? { displayName } : null
+      );
+
+      await userRef.set(userToCreate, { merge: true });
     } catch(error) {
-      console.log('error creating user', error.message);
+      console.log('Error creating user: ', error.message);
     }
   }
 
@@ -102,15 +118,6 @@ export const convertProductsToCategoryMap = products => {
   });
 
   return categoriesMap;
-};
-
-export const getCurrentUser = () => {
-  return new Promise((resolve, reject) => {
-    const unsubscribe = auth.onAuthStateChanged(userAuth => {
-      unsubscribe();
-      resolve(userAuth);
-    }, reject);
-  });
 };
 
 export const auth = firebase.auth();

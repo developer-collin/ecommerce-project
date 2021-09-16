@@ -9,10 +9,10 @@ export const emailSignInStart = emailAndPassword => ({
   payload: emailAndPassword
 });
 
-export const authSuccess = user => {
+export const setUserSuccess = user => {
   const serializedCreatedAt = user.createdAt.toDate().toISOString();
   return ({
-    type: UserActionTypes.AUTH_SUCCESS,
+    type: UserActionTypes.SET_USER_SUCCESS,
     user: {
       ...user,
       createdAt: serializedCreatedAt
@@ -20,8 +20,8 @@ export const authSuccess = user => {
   });
 };
 
-export const authFailure = errorMessage => ({
-  type: UserActionTypes.AUTH_FAILURE,
+export const setUserFailure = errorMessage => ({
+  type: UserActionTypes.SET_USER_FAILURE,
   payload: errorMessage
 });
 
@@ -34,8 +34,9 @@ export const signInFailure = errorMessage => ({
   payload: errorMessage
 });
 
-export const checkUserSession = () => ({
-  type: UserActionTypes.CHECK_USER_SESSION
+export const userAuthSuccess = userAuth => ({
+  type: UserActionTypes.USER_AUTH_SUCCESS,
+  userAuth
 });
 
 export const signOutStart = () => ({
@@ -56,15 +57,9 @@ export const signUpStart = userCredentials => ({
   payload: userCredentials
 });
 
-export const signUpSuccess = ({ userAuth, additionalData }) => {
-  return ({
-    type: UserActionTypes.SIGN_UP_SUCCESS,
-    payload: {
-      userAuth,
-      additionalData
-    }
-  })
-};
+export const signUpSuccess = () => ({
+  type: UserActionTypes.SIGN_UP_SUCCESS
+});
 
 export const signUpFailure = errorMessage => ({
   type: UserActionTypes.SIGN_UP_FAILURE,
