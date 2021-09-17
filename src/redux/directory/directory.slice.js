@@ -1,3 +1,5 @@
+import { createSlice } from '@reduxjs/toolkit';
+
 const INITIAL_STATE = {
   sections: [
     {
@@ -35,11 +37,11 @@ const INITIAL_STATE = {
   ]
 };
 
-const directoryReducer = (state = INITIAL_STATE, action) => {
-  switch (action.type) {
-    default:
-      return state;
-  }
-};
+const directorySlice = createSlice({
+  name: 'directory',
+  initialState: INITIAL_STATE,
+});
 
-export default directoryReducer;
+const { reducer } = directorySlice;
+
+export default reducer;

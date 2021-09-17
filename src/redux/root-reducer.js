@@ -4,7 +4,7 @@ import storage from 'redux-persist/lib/storage';
 
 import userReducer from './user/user.reducer';
 import cartReducer from './cart/cart.reducer';
-import directoryReducer from './directory/directory.reducer';
+import directoryReducer from './directory/directory.slice';
 import shopReducer from './shop/shop.reducer';
 import ordersReducer from './orders/orders.reducer';
 
