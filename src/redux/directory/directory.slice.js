@@ -42,6 +42,4 @@ const directorySlice = createSlice({
   initialState: INITIAL_STATE,
 });
 
-const { reducer } = directorySlice;
-
-export default reducer;
+export default directorySlice.reducer;

@@ -25,7 +25,7 @@ export const store = configureStore({
           UserActionTypes.USER_AUTH_SUCCESS
         ],
       },
-    }).concat(logger, sagaMiddleware),
+    }).concat(sagaMiddleware, logger),
   devTools: process.env.NODE_ENV !== 'production',
 });
 

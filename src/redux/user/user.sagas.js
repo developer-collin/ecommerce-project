@@ -3,7 +3,6 @@ import { takeLatest, put, all, call } from 'redux-saga/effects'
 import UserActionTypes from './user.types';
 
 import {
-  signInSuccess,
   signInFailure,
   signOutSuccess,
   signOutFailure,
@@ -42,7 +41,6 @@ export function* userAuthenticated({ userAuth }) {
 export function* signInWithGoogle() {
   try {
     yield auth.signInWithPopup(googleProvider);
-    yield put(signInSuccess());
   } catch(error) {
     yield put(signInFailure(error.message));
   }
@@ -51,7 +49,6 @@ export function* signInWithGoogle() {
 export function* signInWithEmail({payload: { email, password }}) {
   try {
     yield auth.signInWithEmailAndPassword(email, password);
-    yield put(signInSuccess());
   } catch(error) {
     yield put(signInFailure(error.message));
   }

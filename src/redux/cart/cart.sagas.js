@@ -3,8 +3,7 @@ import { all, call, takeLatest, put, select } from 'redux-saga/effects';
 import UserActionTypes from '../user/user.types';
 import { selectCurrentUser } from '../user/user.selectors';
 
-import CartActionTypes from './cart.types';
-import { addItem, clearCart, setCartFromFirebase } from './cart.actions';
+import { addItem, removeItem, updateItemQuantity, clearItemFromCart, clearCart, setCartFromFirebase } from './cart.slice';
 import { selectCartVersion, selectCartItems } from './cart.selectors';
 
 import { getUserCartRef } from '../../firebase/firebase.utils';
@@ -15,7 +14,6 @@ export function* clearCartOnSignOut() {
 
 export function* updateCartInFirebase() {
   const currentUser = yield select(selectCurrentUser);
-
   if(currentUser) {
     try {
       const cartRef = yield getUserCartRef(currentUser.id);
@@ -55,10 +53,11 @@ export function* mergeCartWithFirebase() {
 
 export function* onCartChange() {
   yield takeLatest([
-    CartActionTypes.ADD_ITEM,
-    CartActionTypes.REMOVE_ITEM,
-    CartActionTypes.UPDATE_ITEM_QUANTITY,
-    CartActionTypes.CLEAR_ITEM_FROM_CART
+    addItem.type,
+    removeItem.type,
+    updateItemQuantity.type,
+    clearItemFromCart.type,
+    setCartFromFirebase.type
   ], updateCartInFirebase);
 }
 
@@ -66,14 +65,14 @@ export function* onSignOutSuccess() {
   yield takeLatest(UserActionTypes.SIGN_OUT_SUCCESS, clearCartOnSignOut);
 }
 
-export function* onSignInSuccess() {
-  yield takeLatest(UserActionTypes.SIGN_IN_SUCCESS, mergeCartWithFirebase);
+export function* onSetUserSuccess() {
+  yield takeLatest(UserActionTypes.SET_USER_SUCCESS, mergeCartWithFirebase);
 }
 
 export function* cartSagas() {
   yield all([
     call(onSignOutSuccess),
-    call(onSignInSuccess),
+    call(onSetUserSuccess),
     call(onCartChange)
   ]);
 }

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { selectOrder } from '../../redux/orders/orders.selector';
-import { clearCart } from '../../redux/cart/cart.actions';
+import { clearCart } from '../../redux/cart/cart.slice';
 
 import { formatStripePrice, formatDate } from '../utils/formatting';
 

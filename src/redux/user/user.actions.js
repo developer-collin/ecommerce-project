@@ -25,10 +25,6 @@ export const setUserFailure = errorMessage => ({
   payload: errorMessage
 });
 
-export const signInSuccess = () => ({
-  type: UserActionTypes.SIGN_IN_SUCCESS,
-});
-
 export const signInFailure = errorMessage => ({
   type: UserActionTypes.SIGN_IN_FAILURE,
   payload: errorMessage

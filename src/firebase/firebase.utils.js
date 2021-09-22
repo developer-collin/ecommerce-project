@@ -68,7 +68,7 @@ export const getUserCartRef = async (userId) => {
         cartItems: []
       });
     } catch(error) {
-      console.log('error creating cart', error.message);
+      console.log('Error creating cart: ', error.message);
     }
 
     return cartDocRef;

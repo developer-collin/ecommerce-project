@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { getShopImageUrl } from '../utils/images';
 
-import { updateItemQuantity, clearItemFromCart } from '../../redux/cart/cart.actions';
+import { updateItemQuantity, clearItemFromCart } from '../../redux/cart/cart.slice';
 
 import {
   CheckoutItemContainer,

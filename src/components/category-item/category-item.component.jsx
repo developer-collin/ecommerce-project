@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { getShopImageUrl } from '../utils/images';
 
-import { addItem } from '../../redux/cart/cart.actions';
+import { addItem } from '../../redux/cart/cart.slice';
 
 import {
   CategoryItemContainer,
