@@ -6,8 +6,3 @@ export const selectCurrentUser = createSelector(
   [selectUser],
   user => user.currentUser
 );
-
-export const selectSignupAdditionalData = createSelector(
-  [selectUser],
-  user => user.signupAdditionalData
-);

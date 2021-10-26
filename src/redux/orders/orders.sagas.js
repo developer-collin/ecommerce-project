@@ -1,6 +1,7 @@
 import { takeLatest, call, put, all, select } from 'redux-saga/effects';
 
 import { firestore } from '../../firebase/firebase.utils';
+import { getDocs, collection, query, where, orderBy, limit } from 'firebase/firestore';
 
 import { selectCurrentUser } from '../user/user.selectors';
 
@@ -16,10 +17,17 @@ export function* fetchOrdersAsync() {
 
   if(currentUser) {
     try {
-      const ordersSnapshot = yield firestore.collection(`users/${currentUser.id}/orders`).where('orderComplete', '==', true).orderBy('createdAt', 'desc').limit(5).get();
+      const ordersQuery = query(
+        collection(firestore, `users/${currentUser.id}/orders`),
+        where('orderComplete', '==', true),
+        orderBy('createdAt', 'desc'),
+        limit(5)
+      );
+      const ordersSnapshot = yield getDocs(ordersQuery);
 
       const orders = {};
-      ordersSnapshot.docs.forEach(doc => {
+
+      ordersSnapshot.forEach(doc => {
         const docData = doc.data();
 
         // Converting Firebase Timestamp to a serialized date

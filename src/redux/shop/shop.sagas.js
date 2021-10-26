@@ -1,5 +1,7 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 
+import { collection, getDocs } from 'firebase/firestore';
+
 import { firestore, convertProductsToCategoryMap } from '../../firebase/firebase.utils';
 
 import {
@@ -11,8 +13,7 @@ import ShopActionTypes from './shop.types';
 
 export function* fetchProductsAsyc() {
   try {
-    const productsRef = firestore.collection('products');
-    const productsSnapshot = yield productsRef.get();
+    const productsSnapshot = yield getDocs(collection(firestore, 'products'));
     const categoriesMap = yield call(
       convertProductsToCategoryMap,
       productsSnapshot

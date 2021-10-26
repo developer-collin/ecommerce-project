@@ -2,6 +2,7 @@ import { useLayoutEffect, lazy, Suspense } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { auth } from './firebase/firebase.utils';
+import { onAuthStateChanged } from "firebase/auth";
 
 import { connect } from 'react-redux';
 
@@ -23,7 +24,7 @@ const NotFoundPage = lazy(() => import('./pages/not-found/not-found.component'))
 
 const App = ({ userAuthSuccess }) => {
   useLayoutEffect(() => {
-    const unsubscribeFromAuth = auth.onAuthStateChanged(userAuth => {
+    const unsubscribeFromAuth = onAuthStateChanged(auth, userAuth => {
       if(userAuth) {
         // Logged in
         userAuthSuccess(userAuth);

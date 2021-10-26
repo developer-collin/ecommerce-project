@@ -8,6 +8,8 @@ import { selectCartVersion, selectCartItems } from './cart.selectors';
 
 import { getUserCartRef } from '../../firebase/firebase.utils';
 
+import { getDoc, setDoc } from 'firebase/firestore';
+
 export function* clearCartOnSignOut() {
   yield put(clearCart());
 }
@@ -19,7 +21,7 @@ export function* updateCartInFirebase() {
       const cartRef = yield getUserCartRef(currentUser.id);
       const cartItems = yield select(selectCartItems);
       const currentCartVersion = yield select(selectCartVersion);
-      yield cartRef.set({
+      yield setDoc(cartRef, {
         version: currentCartVersion,
         cartItems
       });
@@ -36,7 +38,7 @@ export function* mergeCartWithFirebase() {
   try {
     const loggedOutCartItems = yield select(selectCartItems);
     const cartRef = yield getUserCartRef(currentUser.id);
-    const cartSnapshot = yield cartRef.get();
+    const cartSnapshot = yield getDoc(cartRef);
     const cartData = yield cartSnapshot.data();
 
     yield put(setCartFromFirebase(cartData.cartItems));
