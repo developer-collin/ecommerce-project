@@ -2,7 +2,7 @@ import { useLayoutEffect } from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { fetchProductsStart } from '../../redux/shop/shop.actions';
+import { fetchProductsStart } from '../../redux/shop/shop.slice';
 
 import CategoriesOverviewContainer from '../../components/categories-overview/categories-overview.container';
 import CategoryPageContainer from '../../pages/category/category.container';

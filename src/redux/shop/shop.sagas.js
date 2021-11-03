@@ -4,12 +4,7 @@ import { collection, getDocs } from 'firebase/firestore';
 
 import { firestore, convertProductsToCategoryMap } from '../../firebase/firebase.utils';
 
-import {
-  fetchProductsSuccess,
-  fetchProductsFailure
-} from './shop.actions';
-
-import ShopActionTypes from './shop.types';
+import { fetchProductsStart, fetchProductsSuccess, fetchProductsFailure } from './shop.slice';
 
 export function* fetchProductsAsyc() {
   try {
@@ -24,15 +19,12 @@ export function* fetchProductsAsyc() {
   }
 }
 
-export function* fetchProductsStart() {
-  yield takeLatest(
-    ShopActionTypes.FETCH_PRODUCTS_START,
-    fetchProductsAsyc
-  );
+export function* onFetchProductsStart() {
+  yield takeLatest(fetchProductsStart.type, fetchProductsAsyc);
 }
 
 export function* shopSagas() {
   yield all([
-    call(fetchProductsStart)
+    call(onFetchProductsStart)
   ]);
 }
