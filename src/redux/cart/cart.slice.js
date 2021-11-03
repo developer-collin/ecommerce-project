@@ -45,7 +45,7 @@ export const cartSlice = createSlice({
             item,
             version: Date.now()
           }
-        }
+        };
       }
     },
     updateItemQuantity: {
@@ -61,7 +61,7 @@ export const cartSlice = createSlice({
             quantity,
             version: Date.now()
           }
-        }
+        };
       }
     },
     clearItemFromCart: {
@@ -76,7 +76,7 @@ export const cartSlice = createSlice({
             itemId,
             version: Date.now()
           }
-        }
+        };
       }
     },
     clearCart: {
@@ -89,11 +89,11 @@ export const cartSlice = createSlice({
           payload: {
             version: Date.now()
           }
-        }
+        };
       }
     },
     setCartFromFirebase: (state, action) => {
-      state.cartItems = action.payload
+      state.cartItems = action.payload;
     }
   }
 });

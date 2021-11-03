@@ -5,12 +5,7 @@ import { getDocs, collection, query, where, orderBy, limit } from 'firebase/fire
 
 import { selectCurrentUser } from '../user/user.selectors';
 
-import {
-  fetchOrdersSuccess,
-  fetchOrdersFailure
-} from './orders.actions';
-
-import OrdersActionTypes from './orders.types';
+import { fetchOrdersStart, fetchOrdersSuccess, fetchOrdersFailure } from './orders.slice';
 
 export function* fetchOrdersAsync() {
   const currentUser = yield select(selectCurrentUser);
@@ -49,15 +44,12 @@ export function* fetchOrdersAsync() {
   }
 };
 
-export function* fetchOrdersStart() {
-  yield takeLatest(
-    OrdersActionTypes.FETCH_ORDERS_START,
-    fetchOrdersAsync
-  );
+export function* onFetchOrdersStart() {
+  yield takeLatest(fetchOrdersStart.type, fetchOrdersAsync);
 };
 
 export function* ordersSagas() {
   yield all([
-    call(fetchOrdersStart),
+    call(onFetchOrdersStart),
   ]);
 };

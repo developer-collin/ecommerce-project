@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Route, useRouteMatch } from 'react-router-dom';
 
-import { fetchOrdersStart } from '../../redux/orders/orders.actions';
+import { fetchOrdersStart } from '../../redux/orders/orders.slice';
 
 import OrderHistoryContainer from '../../components/order-history/order-history.container';
 import OrderDetailsContainer from '../../components/order-details/order-details.container';

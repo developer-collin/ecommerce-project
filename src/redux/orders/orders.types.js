@@ -1,7 +1,0 @@
-const OrdersActionTypes = {
-  FETCH_ORDERS_START: 'FETCH_ORDERS_START',
-  FETCH_ORDERS_SUCCESS: 'FETCH_ORDERS_SUCCESS',
-  FETCH_ORDERS_FAILURE: 'FETCH_ORDERS_FAILURE'
-};
-
-export default OrdersActionTypes;

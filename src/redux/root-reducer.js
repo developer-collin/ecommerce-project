@@ -6,7 +6,7 @@ import userReducer from './user/user.reducer';
 import cartReducer from './cart/cart.slice';
 import directoryReducer from './directory/directory.slice';
 import shopReducer from './shop/shop.reducer';
-import ordersReducer from './orders/orders.reducer';
+import ordersReducer from './orders/orders.slice';
 
 const persistConfig = {
   key: 'root',
