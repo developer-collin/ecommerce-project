@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import UserActionTypes from '../redux/user/user.types';
+import { userAuthSuccess } from '../redux/user/user.actions';
 
 import {
   persistStore,
@@ -22,7 +22,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [
           FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER,
-          UserActionTypes.USER_AUTH_SUCCESS
+          userAuthSuccess.type
         ],
       },
     }).concat(sagaMiddleware, logger),

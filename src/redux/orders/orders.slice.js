@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import UserActionTypes from '../user/user.types';
+import { signOutSuccess } from '../user/user.slice';
 
 const INITIAL_STATE = {
   isFetching: false,
@@ -26,7 +26,7 @@ export const ordersSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(UserActionTypes.SIGN_OUT_SUCCESS, (state) => {
+    builder.addCase(signOutSuccess.type, (state) => {
       state.isFetching = false;
       state.items = null;
     });
