@@ -1,4 +1,5 @@
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import CategoryItem from '../../components/category-item/category-item.component';
 
@@ -10,7 +11,9 @@ import {
   CategoryItemsContainer
 } from './category.styles';
 
-const CategoryPage = ({ categories }) => {
+const CategoryPage = () => {
+  const { categoryTitle } = useParams();
+  const categories = useSelector(selectCategory(categoryTitle));
   const { title, items } = categories;
 
   return (
@@ -22,11 +25,7 @@ const CategoryPage = ({ categories }) => {
         ))}
       </CategoryItemsContainer>
     </CategoryPageContainer>
-  )
+  );
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  categories: selectCategory(ownProps.match.params.categoryTitle)(state)
-});
-
-export default connect(mapStateToProps)(CategoryPage);
+export default CategoryPage;

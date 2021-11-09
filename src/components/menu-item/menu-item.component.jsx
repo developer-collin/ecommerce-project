@@ -1,4 +1,4 @@
-import { withRouter } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 
 import { getShopImageUrl } from '../utils/images';
 
@@ -10,13 +10,15 @@ import {
   ContentSubtitle
 } from './menu-item.styles';
 
-const MenuItem = ({ title, imageFilename, size, history, linkUrl, match }) => {
+const MenuItem = ({ title, imageFilename, size, linkUrl }) => {
   const imageUrl = getShopImageUrl(imageFilename);
+  const history = useHistory();
+  const { url } = useRouteMatch();
 
   return (
     <MenuItemContainer
       size={size}
-      onClick={() => history.push(`${match.url}${linkUrl}`)}
+      onClick={() => history.push(`${url}${linkUrl}`)}
     >
       <BackgroundImageContainer imageUrl={imageUrl} />
       <ContentContainer>
@@ -27,4 +29,4 @@ const MenuItem = ({ title, imageFilename, size, history, linkUrl, match }) => {
   );
 };
 
-export default withRouter(MenuItem);
+export default MenuItem;

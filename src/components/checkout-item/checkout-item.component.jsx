@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { getShopImageUrl } from '../utils/images';
 
@@ -12,7 +12,8 @@ import {
   RemoveButtonContainer
 } from './checkout-item.styles';
 
-const CheckoutItem = ({ cartItem, updateItemQuantity, clearItem }) => {
+const CheckoutItem = ({ cartItem }) => {
+  const dispatch = useDispatch();
   const {id, name, imageFilename, price, quantity} = cartItem;
   const imageUrl = getShopImageUrl(imageFilename);
 
@@ -37,22 +38,17 @@ const CheckoutItem = ({ cartItem, updateItemQuantity, clearItem }) => {
         <select
           name='quantity-dropdown'
           value={quantity}
-          onChange={e => updateItemQuantity(cartItem, parseInt(e.target.value, 10))}
+          onChange={e => dispatch(updateItemQuantity(cartItem, parseInt(e.target.value, 10)))}
         >
           { quantityOptions(quantity) }
         </select>
       </QuantityContainer>
       <TextContainer>{price}</TextContainer>
-      <RemoveButtonContainer onClick={() => clearItem(id)}>
+      <RemoveButtonContainer onClick={() => dispatch(clearItemFromCart(id))}>
         &#10005;
       </RemoveButtonContainer>
     </CheckoutItemContainer>
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  updateItemQuantity: (item, quantity) => dispatch(updateItemQuantity(item, quantity)),
-  clearItem: itemId => dispatch(clearItemFromCart(itemId))
-});
-
-export default connect(null, mapDispatchToProps)(CheckoutItem);
+export default CheckoutItem;

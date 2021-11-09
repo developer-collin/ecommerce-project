@@ -1,12 +1,12 @@
-import { connect } from 'react-redux';
-
-import { createStructuredSelector } from 'reselect';
+import { useSelector } from 'react-redux';
 
 import { selectAllOrders } from '../../redux/orders/orders.selector';
 
 import OrderPreview from '../../components/order-preview/order-preview.component';
 
-const OrderHistory = ({ orders }) => {
+const OrderHistory = () => {
+  const orders = useSelector(selectAllOrders);
+
   return (
     <div>
       <h1>Orders:</h1>
@@ -29,8 +29,4 @@ const OrderHistory = ({ orders }) => {
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  orders: selectAllOrders,
-});
-
-export default connect(mapStateToProps)(OrderHistory);
+export default OrderHistory;

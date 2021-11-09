@@ -4,7 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { auth } from './firebase/firebase.utils';
 import { onAuthStateChanged } from "firebase/auth";
 
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import AuthRoute from './components/auth-route/auth-route.component';
 import Header from './components/header/header.component';
@@ -22,17 +22,19 @@ const CheckoutPage = lazy(() => import('./pages/checkout/checkout.component'));
 const OrdersPage = lazy(() => import('./pages/orders/orders.component'));
 const NotFoundPage = lazy(() => import('./pages/not-found/not-found.component'));
 
-const App = ({ userAuthSuccess }) => {
+const App = () => {
+  const dispatch = useDispatch();
+
   useLayoutEffect(() => {
     const unsubscribeFromAuth = onAuthStateChanged(auth, userAuth => {
       if(userAuth) {
         // Logged in
-        userAuthSuccess(userAuth);
+        dispatch(userAuthSuccess(userAuth));
       }
     });
 
     return () => unsubscribeFromAuth();
-  }, [userAuthSuccess]);
+  }, [dispatch]);
 
   return (
     <div>
@@ -55,10 +57,6 @@ const App = ({ userAuthSuccess }) => {
       </ErrorBoundary>
     </div>
   );
-}
+};
 
-const mapDispatchToProps = dispatch => ({
-  userAuthSuccess: userAuth => dispatch(userAuthSuccess(userAuth))
-});
-
-export default connect(null, mapDispatchToProps)(App);
+export default App;

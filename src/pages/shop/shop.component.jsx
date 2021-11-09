@@ -1,33 +1,26 @@
 import { useLayoutEffect } from 'react';
-import { Route } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { Route, useRouteMatch } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import { fetchProductsStart } from '../../redux/shop/shop.slice';
 
 import CategoriesOverviewContainer from '../../components/categories-overview/categories-overview.container';
 import CategoryPageContainer from '../../pages/category/category.container';
 
-const ShopPage = ({ fetchProductsStart, match }) => {
+const ShopPage = () => {
+  const dispatch = useDispatch();
+  const { path } = useRouteMatch();
+
   useLayoutEffect(() => {
-    fetchProductsStart();
-  }, [fetchProductsStart]);
+    dispatch(fetchProductsStart());
+  }, [dispatch]);
 
   return (
     <div>
-      <Route
-        exact
-        path={`${match.path}`}
-        component={CategoriesOverviewContainer}
-      />
-      <Route
-        path={`${match.path}/:categoryTitle`}
-        component={CategoryPageContainer} />
+      <Route exact path={`${path}`} component={CategoriesOverviewContainer} />
+      <Route path={`${path}/:categoryTitle`} component={CategoryPageContainer} />
     </div>
   );
-}
+};
 
-const mapDispatchToProps = dispatch => ({
-  fetchProductsStart: () => dispatch(fetchProductsStart())
-});
-
-export default connect(null, mapDispatchToProps)(ShopPage);
+export default ShopPage;

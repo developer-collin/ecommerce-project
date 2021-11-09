@@ -1,5 +1,4 @@
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { useSelector } from 'react-redux';
 
 import CategoryPreview from '../category-preview/category-preview.component';
 
@@ -7,18 +6,18 @@ import { selectCategoriesForPreview } from '../../redux/shop/shop.selectors';
 
 import { CategoriesOverviewContainer } from './categories-overview.styles';
 
-const CategoriesOverview = ({ categories }) => (
-  <CategoriesOverviewContainer>
-    {
-      categories.map(props => (
-        <CategoryPreview key={props.title} {...props} />
-      ))
-    }
-  </CategoriesOverviewContainer>
-);
+const CategoriesOverview = () => {
+  const categories = useSelector(selectCategoriesForPreview);
 
-const mapStateToProps = createStructuredSelector({
-  categories: selectCategoriesForPreview
-});
+  return (
+    <CategoriesOverviewContainer>
+      {
+        categories.map(props => (
+          <CategoryPreview key={props.title} {...props} />
+        ))
+      }
+    </CategoriesOverviewContainer>
+  );
+};
 
-export default connect(mapStateToProps)(CategoriesOverview)
+export default CategoriesOverview;

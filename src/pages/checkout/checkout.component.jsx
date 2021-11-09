@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { useSelector } from 'react-redux';
 
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
 
@@ -17,8 +16,12 @@ import {
   CheckoutStatusContainer
 } from './checkout.styles';
 
-const CheckoutPage = ({ currentUser, cartItems, cartTotal }) => {
-  const uid = currentUser ? currentUser.id : ''
+const CheckoutPage = () => {
+  const currentUser = useSelector(selectCurrentUser);
+  const cartItems = useSelector(selectCartItems);
+  const cartTotal = useSelector(selectCartTotal);
+  
+  const uid = currentUser ? currentUser.id : '';
   
   const [statusMessage, setStatusMessage] = useState('');
 
@@ -78,10 +81,4 @@ const CheckoutPage = ({ currentUser, cartItems, cartTotal }) => {
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
-  cartItems: selectCartItems,
-  cartTotal: selectCartTotal
-});
-
-export default connect(mapStateToProps)(CheckoutPage);
+export default CheckoutPage;

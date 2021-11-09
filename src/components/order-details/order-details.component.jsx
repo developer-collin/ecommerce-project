@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { selectOrder } from '../../redux/orders/orders.selector';
 import { clearCart } from '../../redux/cart/cart.slice';
@@ -10,14 +11,18 @@ import * as S from './order-details.styles';
 
 import OrderLineItem from '../order-line-item/order-line-item.component';
 
-const OrderDetails = ({ order, clearCart }) => {
+const OrderDetails = () => {
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const order = useSelector(selectOrder(id));
+
   useEffect(() => {
     // If a redirect back from Stripe Checkout
     const query = new URLSearchParams(window.location.search);
     if (query.get('success')) {
-      clearCart();
+      dispatch(clearCart());
     }
-  }, [clearCart]);
+  }, [dispatch]);
 
   if (order) {
     const { amount_subtotal,
@@ -97,12 +102,4 @@ const OrderDetails = ({ order, clearCart }) => {
   }
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  order: selectOrder(ownProps.match.params.id)(state)
-});
-
-const mapDispatchToProps = dispatch => ({
-  clearCart: () => dispatch(clearCart())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(OrderDetails);
+export default OrderDetails;

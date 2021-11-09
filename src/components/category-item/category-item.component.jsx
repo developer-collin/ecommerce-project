@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { getShopImageUrl } from '../utils/images';
 
@@ -13,7 +13,8 @@ import {
   PriceContainer
 } from './category-item.styles';
 
-const CategoryItem = ({ item, addItem }) => {
+const CategoryItem = ({ item }) => {
+  const dispatch = useDispatch();
   const { name, price, imageFilename } = item;
   const imageUrl = getShopImageUrl(imageFilename);
   return (
@@ -27,15 +28,11 @@ const CategoryItem = ({ item, addItem }) => {
         <NameContainer>{name}</NameContainer>
         <PriceContainer>{price}</PriceContainer>
       </CategoryFooterContainer>
-      <AddButton onClick={() => addItem(item)} inverted>
+      <AddButton onClick={() => dispatch(addItem(item))} inverted>
         Add to cart
       </AddButton>
     </CategoryItemContainer>
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  addItem: (item) => dispatch(addItem(item)),
-});
-
-export default connect(null, mapDispatchToProps)(CategoryItem);
+export default CategoryItem;
