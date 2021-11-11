@@ -1,4 +1,4 @@
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { getShopImageUrl } from '../utils/images';
 
@@ -12,13 +12,12 @@ import {
 
 const MenuItem = ({ title, imageFilename, size, linkUrl }) => {
   const imageUrl = getShopImageUrl(imageFilename);
-  const history = useHistory();
-  const { url } = useRouteMatch();
+  const navigate = useNavigate();
 
   return (
     <MenuItemContainer
       size={size}
-      onClick={() => history.push(`${url}${linkUrl}`)}
+      onClick={() => navigate(linkUrl)}
     >
       <BackgroundImageContainer imageUrl={imageUrl} />
       <ContentContainer>

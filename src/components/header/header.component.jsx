@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 import CartIcon from '../cart-icon/cart-icon.component';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
@@ -14,6 +15,7 @@ import { HeaderContainer, LogoContainer, OptionsContainer, OptionLink } from './
 
 const Header = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const currentUser = useSelector(selectCurrentUser);
   const isCartHidden = useSelector(selectCartHidden);
 
@@ -28,7 +30,7 @@ const Header = () => {
         {
           currentUser
           ? <OptionLink as='div' onClick={() => dispatch(signOutStart())}>SIGN OUT</OptionLink>
-          : <OptionLink to={{pathname: '/signin', state: { from: window.location.pathname }}}>
+          : <OptionLink to='/signin' state={{ from: location }}>
               SIGN IN
             </OptionLink>
         }

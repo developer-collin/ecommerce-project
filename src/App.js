@@ -1,12 +1,12 @@
 import { useLayoutEffect, lazy, Suspense } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import { auth } from './firebase/firebase.utils';
 import { onAuthStateChanged } from "firebase/auth";
 
 import { useDispatch } from 'react-redux';
 
-import AuthRoute from './components/auth-route/auth-route.component';
+import RequireAuth from './components/require-auth/require-auth.component';
 import Header from './components/header/header.component';
 import Spinner from './components/spinner/spinner.component';
 import ErrorBoundary from './components/error-boundary/error-boundary.component';
@@ -14,6 +14,11 @@ import ErrorBoundary from './components/error-boundary/error-boundary.component'
 import GlobalStyle from './global.styles';
 
 import { userAuthSuccess } from './redux/user/user.actions';
+
+import CategoriesOverviewContainer from './components/categories-overview/categories-overview.container';
+import CategoryPageContainer from './pages/category/category.container';
+import OrderHistoryContainer from './components/order-history/order-history.container';
+import OrderDetailsContainer from './components/order-details/order-details.container';
 
 const HomePage = lazy(() => import('./pages/homepage/homepage.component'));
 const ShopPage = lazy(() => import('./pages/shop/shop.component'));
@@ -42,17 +47,20 @@ const App = () => {
       <Header />
       <ErrorBoundary>
         <Suspense fallback={<Spinner />}>
-          <Switch>
-            {/* Remove trailing slashes
-              https://github.com/ReactTraining/react-router/issues/4841#issuecomment-821980722 */}
-            <Redirect from="/:url*(/+)" to={window.location.pathname.replace(/\/+$/, window.location.search)} />
-            <Route exact path='/' component={HomePage} />
-            <Route path='/shop' component={ShopPage} />
-            <AuthRoute exact path='/checkout' component={CheckoutPage} />
-            <AuthRoute path='/orders' component={OrdersPage} />
-            <Route exact path='/signin' component={SignInAndSignUp} />
-            <Route component={NotFoundPage} />
-          </Switch>
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='shop' element={<ShopPage />}>
+              <Route index element={<CategoriesOverviewContainer />} />
+              <Route path=':categoryTitle' element={<CategoryPageContainer />} />
+            </Route>
+            <Route path='/checkout' element={<RequireAuth><CheckoutPage /></RequireAuth>} />
+            <Route path='/orders' element={<RequireAuth><OrdersPage /></RequireAuth>}>
+              <Route index element={<OrderHistoryContainer />} />
+              <Route path=':id' element={<OrderDetailsContainer />} />
+            </Route>
+            <Route path='/signin' element={<SignInAndSignUp />} />
+            <Route path='*' element={<NotFoundPage />} />
+          </Routes>
         </Suspense>
       </ErrorBoundary>
     </div>

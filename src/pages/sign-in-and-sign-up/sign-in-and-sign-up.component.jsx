@@ -1,4 +1,4 @@
-import { Redirect, useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 import { useSelector } from 'react-redux'
 import { selectCurrentUser } from '../../redux/user/user.selectors';
@@ -11,10 +11,10 @@ import { SignInAndSignUpContainer } from './sign-in-and-sign-up.styles';
 const SignInAndSignUp = () => {
   const currentUser = useSelector(selectCurrentUser);
   const location = useLocation();
-  const { from } = location.state || { from: { pathname: '/' } };
+  const from = location.state?.from?.pathname || '/';
 
   if (currentUser) {
-    return <Redirect to={from} />
+    return <Navigate to={from} replace={true} />;
   }
 
   return (

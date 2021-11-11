@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import CategoryItem from '../category-item/category-item.component';
 
@@ -9,12 +9,10 @@ import {
 } from './category-preview.styles';
 
 const CategoryPreview = ({ title, items, routeName }) => {
-  const location = useLocation();
-
   return (
   <CategoryPreviewContainer>
     <TitleContainer>
-      <Link to={`${location.pathname}/${routeName}`}>
+      <Link to={routeName}>
         {title}
       </Link>
     </TitleContainer>

@@ -8,7 +8,7 @@ import { CategoriesOverviewContainer } from './categories-overview.styles';
 
 const CategoriesOverview = () => {
   const categories = useSelector(selectCategoriesForPreview);
-
+  
   return (
     <CategoriesOverviewContainer>
       {
