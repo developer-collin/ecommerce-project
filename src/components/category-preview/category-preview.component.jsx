@@ -2,21 +2,17 @@ import { Link } from 'react-router-dom';
 
 import CategoryItem from '../category-item/category-item.component';
 
-import {
-  CategoryPreviewContainer,
-  TitleContainer,
-  PreviewContainer
-} from './category-preview.styles';
+import * as S from './category-preview.styles';
 
 const CategoryPreview = ({ title, items, routeName }) => {
   return (
-  <CategoryPreviewContainer>
-    <TitleContainer>
+  <S.CategoryPreviewContainer>
+    <S.TitleContainer>
       <Link to={routeName}>
         {title}
       </Link>
-    </TitleContainer>
-    <PreviewContainer>
+    </S.TitleContainer>
+    <S.PreviewContainer>
       {
         items
           .filter((item, index) => index < 4)
@@ -24,8 +20,8 @@ const CategoryPreview = ({ title, items, routeName }) => {
             <CategoryItem key={item.id} item={item} />
           ))
       }
-    </PreviewContainer>
-  </CategoryPreviewContainer>
+    </S.PreviewContainer>
+  </S.CategoryPreviewContainer>
 )};
 
 export default CategoryPreview;

@@ -4,13 +4,7 @@ import { getShopImageUrl } from '../utils/images';
 
 import { updateItemQuantity, clearItemFromCart } from '../../redux/cart/cart.slice';
 
-import {
-  CheckoutItemContainer,
-  ImageContainer,
-  TextContainer,
-  QuantityContainer,
-  RemoveButtonContainer
-} from './checkout-item.styles';
+import * as S from './checkout-item.styles';
 
 const CheckoutItem = ({ cartItem }) => {
   const dispatch = useDispatch();
@@ -29,12 +23,12 @@ const CheckoutItem = ({ cartItem }) => {
   };
 
   return (
-    <CheckoutItemContainer>
-      <ImageContainer>
+    <S.CheckoutItemContainer>
+      <S.ImageContainer>
         <img src={imageUrl} alt='Item' />
-      </ImageContainer>
-      <TextContainer>{name}</TextContainer>
-      <QuantityContainer>
+      </S.ImageContainer>
+      <S.TextContainer>{name}</S.TextContainer>
+      <S.QuantityContainer>
         <select
           name='quantity-dropdown'
           value={quantity}
@@ -42,12 +36,12 @@ const CheckoutItem = ({ cartItem }) => {
         >
           { quantityOptions(quantity) }
         </select>
-      </QuantityContainer>
-      <TextContainer>{price}</TextContainer>
-      <RemoveButtonContainer onClick={() => dispatch(clearItemFromCart(id))}>
+      </S.QuantityContainer>
+      <S.TextContainer>{price}</S.TextContainer>
+      <S.RemoveButtonContainer onClick={() => dispatch(clearItemFromCart(id))}>
         &#10005;
-      </RemoveButtonContainer>
-    </CheckoutItemContainer>
+      </S.RemoveButtonContainer>
+    </S.CheckoutItemContainer>
   );
 };
 

@@ -33,6 +33,12 @@ const INITIAL_STATE = {
       size: 'large',
       id: 5,
       linkUrl: 'shop/mens'
+    },
+    {
+      title: 'suits',
+      imageFilename: 'suits.jpg',
+      id: 6,
+      linkUrl: 'shop/suits'
     }
   ]
 };

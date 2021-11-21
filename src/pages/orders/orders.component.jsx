@@ -4,6 +4,8 @@ import { Outlet } from 'react-router-dom';
 
 import { fetchOrdersStart } from '../../redux/orders/orders.slice';
 
+import * as S from './orders.styles';
+
 const OrdersPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -11,9 +13,9 @@ const OrdersPage = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <S.OrdersPageContainer>
       <Outlet />
-    </>
+    </S.OrdersPageContainer>
   );
 };
 

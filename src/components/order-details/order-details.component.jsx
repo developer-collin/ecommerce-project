@@ -40,7 +40,7 @@ const OrderDetails = () => {
     const tax = formatStripePrice(amount_tax);
 
     return (
-      <S.OrderContainer>
+      <>
         <h1>Order Details</h1>
         <S.Headline>
           <div>
@@ -93,7 +93,7 @@ const OrderDetails = () => {
             )
           }
         </S.LineItems>
-      </S.OrderContainer>
+      </>
     );
   } else {
     return (

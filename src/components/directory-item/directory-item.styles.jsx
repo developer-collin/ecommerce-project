@@ -34,17 +34,16 @@ export const ContentSubtitle = styled.span`
   font-size: 16px;
 `;
 
-export const MenuItemContainer = styled.div`
-	height: ${({ size }) => (size ? '380px' : '240px')};
-	min-width: 30%;
+export const DirectoryItemContainer = styled.div`
+  grid-column-end: ${({ size }) => (size === 'large' ? 'span 3' : 'span 2')};
+	height: ${({ size }) => (size === 'large' ? '380px' : '240px')};
+  border: 1px solid black;
+  position: relative;
 	overflow: hidden;
-	flex: 1 1 auto;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border: 1px solid black;
-	margin: 0 7.5px 15px;
-	overflow: hidden;
+
 	&:hover {
 		cursor: pointer;
 	  ${BackgroundImageContainer} {
@@ -55,14 +54,9 @@ export const MenuItemContainer = styled.div`
 			opacity: 0.9;
 		}
 	}
-	&:first-child {
-    margin-right: 7.5px;
-  }
-  &:last-child {
-    margin-left: 7.5px;
-  }
 
   @media screen and (max-width: 800px) {
+    grid-column-end: ${({ size }) => (size === 'large' ? 'span 6' : 'span 3')};
     height: 200px;
   }
 `;

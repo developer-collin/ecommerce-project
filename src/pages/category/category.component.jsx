@@ -5,26 +5,29 @@ import CategoryItem from '../../components/category-item/category-item.component
 
 import { selectCategory } from '../../redux/shop/shop.selectors';
 
-import {
-  CategoryPageContainer,
-  CategoryTitle,
-  CategoryItemsContainer
-} from './category.styles';
+import * as S from './category.styles';
 
 const CategoryPage = () => {
   const { categoryTitle } = useParams();
-  const categories = useSelector(selectCategory(categoryTitle));
-  const { title, items } = categories;
+  const category = useSelector(selectCategory(categoryTitle));
+
+  if(!category) return (
+    <S.CategoryPageContainer>
+      <S.CategoryTitle>
+        Category not found
+      </S.CategoryTitle>
+    </S.CategoryPageContainer>
+  );
 
   return (
-    <CategoryPageContainer>
-      <CategoryTitle>{ title }</CategoryTitle>
-      <CategoryItemsContainer>
-        {items.map(item => (
+    <S.CategoryPageContainer>
+      <S.CategoryTitle>{ category.title }</S.CategoryTitle>
+      <S.CategoryItemsContainer>
+        {category.items.map(item => (
           <CategoryItem key={item.id} item={item} />
         ))}
-      </CategoryItemsContainer>
-    </CategoryPageContainer>
+      </S.CategoryItemsContainer>
+    </S.CategoryPageContainer>
   );
 };
 

@@ -8,24 +8,24 @@ const OrderHistory = () => {
   const orders = useSelector(selectAllOrders);
 
   return (
-    <div>
+    <>
       <h1>Orders:</h1>
       {
         orders && orders.length ? (
-          <ul>
+          <>
             {
               orders.map(order => (
                 <OrderPreview key={order.id} order={order} />
               ))
             }
-          </ul>
+          </>
         ) : (
           <div>
             You have no orders at this time.
           </div>
         )
       }
-    </div>
+    </>
   );
 };
 

@@ -7,14 +7,7 @@ import CheckoutItem from '../../components/checkout-item/checkout-item.component
 import { selectCartItems, selectCartTotal } from '../../redux/cart/cart.selectors';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 
-import {
-  CheckoutPageContainer,
-  CheckoutHeaderContainer,
-  HeaderBlockContainer,
-  TotalContainer,
-  WarningContainer,
-  CheckoutStatusContainer
-} from './checkout.styles';
+import * as S from './checkout.styles';
 
 const CheckoutPage = () => {
   const currentUser = useSelector(selectCurrentUser);
@@ -36,48 +29,48 @@ const CheckoutPage = () => {
   }, []);
 
   return (
-    <CheckoutPageContainer>
+    <S.CheckoutPageContainer>
       { statusMessage ?
-          <CheckoutStatusContainer>
+          <S.CheckoutStatusContainer>
             { statusMessage }
-          </CheckoutStatusContainer>
+          </S.CheckoutStatusContainer>
         : null
       }
 
-      <CheckoutHeaderContainer>
-        <HeaderBlockContainer>
+      <S.CheckoutHeaderContainer>
+        <S.HeaderBlockContainer>
           <span>Product</span>
-        </HeaderBlockContainer>
-        <HeaderBlockContainer>
+        </S.HeaderBlockContainer>
+        <S.HeaderBlockContainer>
           <span>Description</span>
-        </HeaderBlockContainer>
-        <HeaderBlockContainer>
+        </S.HeaderBlockContainer>
+        <S.HeaderBlockContainer>
           <span>Quantity</span>
-        </HeaderBlockContainer>
-        <HeaderBlockContainer>
+        </S.HeaderBlockContainer>
+        <S.HeaderBlockContainer>
           <span>Price</span>
-        </HeaderBlockContainer>
-        <HeaderBlockContainer>
+        </S.HeaderBlockContainer>
+        <S.HeaderBlockContainer>
           <span>Remove</span>
-        </HeaderBlockContainer>
-      </CheckoutHeaderContainer>
+        </S.HeaderBlockContainer>
+      </S.CheckoutHeaderContainer>
       {
         cartItems.map(cartItem => (
           <CheckoutItem key={cartItem.id} cartItem={cartItem} />
         ))
       }
-      <TotalContainer>TOTAL: ${cartTotal}</TotalContainer>
-      <WarningContainer>
+      <S.TotalContainer>TOTAL: ${cartTotal}</S.TotalContainer>
+      <S.WarningContainer>
         *Please use the following test credit card for payments*
         <br/>
         4242 4242 4242 4242 -  Exp: 01/24 - CVV: 123
-      </WarningContainer>
+      </S.WarningContainer>
 
       <form action={`${process.env.REACT_APP_POST_DOMAIN}/create-checkout-session`} method='POST'>
         <input type="hidden" name="userId" value={uid} />
         <button type="submit">Checkout</button>
       </form>
-    </CheckoutPageContainer>
+    </S.CheckoutPageContainer>
   );
 };
 

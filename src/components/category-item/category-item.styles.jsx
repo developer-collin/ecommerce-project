@@ -65,10 +65,9 @@ export const CategoryFooterContainer = styled.div`
 `;
 
 export const NameContainer = styled.span`
-  width: 90%;
   margin-bottom: 15px;
 `;
 
 export const PriceContainer = styled.span`
-  width: 10%;
+  margin-left: 1em;
 `;

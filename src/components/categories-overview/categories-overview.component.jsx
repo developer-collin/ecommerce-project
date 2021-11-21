@@ -4,19 +4,19 @@ import CategoryPreview from '../category-preview/category-preview.component';
 
 import { selectCategoriesForPreview } from '../../redux/shop/shop.selectors';
 
-import { CategoriesOverviewContainer } from './categories-overview.styles';
+import * as S from './categories-overview.styles';
 
 const CategoriesOverview = () => {
   const categories = useSelector(selectCategoriesForPreview);
   
   return (
-    <CategoriesOverviewContainer>
+    <S.CategoriesOverviewContainer>
       {
         categories.map(props => (
           <CategoryPreview key={props.title} {...props} />
         ))
       }
-    </CategoriesOverviewContainer>
+    </S.CategoriesOverviewContainer>
   );
 };
 

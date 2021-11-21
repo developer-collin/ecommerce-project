@@ -1,9 +1,9 @@
-import { CustomButtonContainer } from './custom-button.styles';
+import * as S from './custom-button.styles';
 
 const CustomButton = ({children, ...props}) => (
-  <CustomButtonContainer {...props}>
+  <S.CustomButtonContainer {...props}>
     {children}
-  </CustomButtonContainer>
+  </S.CustomButtonContainer>
 );
 
 export default CustomButton;

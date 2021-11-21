@@ -9,11 +9,7 @@ import {
   emailSignInStart
 } from '../../redux/user/user.actions';
 
-import {
-  SignInContainer,
-  SignInTitle,
-  ButtonsBarContainer
-} from './sign-in.styles';
+import * as S from './sign-in.styles';
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -38,8 +34,8 @@ const SignIn = () => {
   }
 
   return (
-    <SignInContainer>
-      <SignInTitle>I already have an account</SignInTitle>
+    <S.SignInContainer>
+      <S.SignInTitle>I already have an account</S.SignInTitle>
       <span>Sign in with your email and password</span>
 
       <form onSubmit={handleSubmit}>
@@ -61,14 +57,14 @@ const SignIn = () => {
           label='password'
           required
         />
-        <ButtonsBarContainer>
+        <S.ButtonsBarContainer>
           <CustomButton type='submit'>Sign in</CustomButton>
           <CustomButton type='button' isGoogleSignIn onClick={() => dispatch(googleSignInStart())}>
             Sign in with Google
           </CustomButton>
-        </ButtonsBarContainer>
+        </S.ButtonsBarContainer>
       </form>
-    </SignInContainer>
+    </S.SignInContainer>
   );
 }
 

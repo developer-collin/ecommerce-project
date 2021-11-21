@@ -49,7 +49,7 @@ const App = () => {
         <Suspense fallback={<Spinner />}>
           <Routes>
             <Route path='/' element={<HomePage />} />
-            <Route path='shop' element={<ShopPage />}>
+            <Route path='/shop' element={<ShopPage />}>
               <Route index element={<CategoriesOverviewContainer />} />
               <Route path=':categoryTitle' element={<CategoryPageContainer />} />
             </Route>

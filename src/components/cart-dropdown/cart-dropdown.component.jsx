@@ -6,12 +6,7 @@ import CartItem from '../cart-item/cart-item.component';
 import { toggleCartHidden } from '../../redux/cart/cart.slice';
 import { selectCartItems } from '../../redux/cart/cart.selectors';
 
-import {
-  CartDropdownContainer,
-  CartItemsContainer,
-  EmptyMessageContainer,
-  CartDropdownButton
-} from './cart-dropdown.styles';
+import * as S from './cart-dropdown.styles';
 
 const CartDropdown = () => {
   const dispatch = useDispatch();
@@ -19,26 +14,26 @@ const CartDropdown = () => {
   const cartItems = useSelector(selectCartItems);
 
   return (
-    <CartDropdownContainer>
-      <CartItemsContainer>
+    <S.CartDropdownContainer>
+      <S.CartItemsContainer>
         {
           cartItems.length ? (
             cartItems.map(cartItem => (
               <CartItem key={cartItem.id} item={cartItem} />
             ))
           ) : (
-            <EmptyMessageContainer>Your cart is empty</EmptyMessageContainer>
+            <S.EmptyMessageContainer>Your cart is empty</S.EmptyMessageContainer>
           )
         }
-      </CartItemsContainer>
-      <CartDropdownButton
+      </S.CartItemsContainer>
+      <S.CartDropdownButton
         onClick={() => {
           navigate('/checkout');
           dispatch(toggleCartHidden());
         }}>
           GO TO CHECKOUT
-      </CartDropdownButton>
-    </CartDropdownContainer>
+      </S.CartDropdownButton>
+    </S.CartDropdownContainer>
   );
 };
 

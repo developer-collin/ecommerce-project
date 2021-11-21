@@ -1,11 +1,5 @@
 import styled from 'styled-components';
 
-export const OrderContainer = styled.div`
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-`;
-
 export const Headline = styled.div`
   overflow: hidden;
   margin-bottom: 1em;
@@ -31,7 +25,6 @@ export const OrderId = styled.span`
 export const Details = styled.div`
   margin-bottom: 16px;
   border: 1px solid #e5e5e5;
-  border-radius: 5px;
   padding: 10px 15px;
   display: flex;
   justify-content: space-between;
@@ -40,9 +33,6 @@ export const Details = styled.div`
 
 export const LineItems = styled.div`
   margin-bottom: 16px;
-  border: 1px solid #e5e5e5;
-  border-radius: 5px;
-  padding: 10px 15px;
 `;
 
 export const Shipping = styled.div`

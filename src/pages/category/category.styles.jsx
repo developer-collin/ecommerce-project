@@ -6,7 +6,7 @@ export const CategoryPageContainer = styled.div`
 `;
 
 export const CategoryTitle = styled.h2`
-  font-size: 38px;
+  font-size: 2em;
   margin: 0 auto 30px;
 `;
 

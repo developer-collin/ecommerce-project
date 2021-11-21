@@ -1,11 +1,11 @@
-import { HomePageContainer } from './homepage.styles';
+import * as S from './homepage.styles';
 
 import Directory from '../../components/directory/directory.component';
 
 const HomePage = () => (
-  <HomePageContainer>
+  <S.HomePageContainer>
     <Directory />
-  </HomePageContainer>
+  </S.HomePageContainer>
 );
 
 export default HomePage;

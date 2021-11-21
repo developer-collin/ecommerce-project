@@ -11,7 +11,7 @@ import { signOutStart } from '../../redux/user/user.actions';
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 
-import { HeaderContainer, LogoContainer, OptionsContainer, OptionLink } from './header.styles';
+import * as S from './header.styles';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -20,25 +20,25 @@ const Header = () => {
   const isCartHidden = useSelector(selectCartHidden);
 
   return (
-    <HeaderContainer>
-      <LogoContainer to='/'>
+    <S.HeaderContainer>
+      <S.LogoContainer to='/'>
         <Logo />
-      </LogoContainer>
-      <OptionsContainer>
-        <OptionLink to='/shop'>SHOP</OptionLink>
-        <OptionLink to='/orders'>ORDERS</OptionLink>
+      </S.LogoContainer>
+      <S.OptionsContainer>
+        <S.OptionLink to='/shop'>SHOP</S.OptionLink>
+        <S.OptionLink to='/orders'>ORDERS</S.OptionLink>
         {
           currentUser
-          ? <OptionLink as='div' onClick={() => dispatch(signOutStart())}>SIGN OUT</OptionLink>
-          : <OptionLink to='/signin' state={{ from: location }}>
+          ? <S.OptionLink as='div' onClick={() => dispatch(signOutStart())}>SIGN OUT</S.OptionLink>
+          : <S.OptionLink to='/signin' state={{ from: location }}>
               SIGN IN
-            </OptionLink>
+            </S.OptionLink>
         }
         <CartIcon />
-      </OptionsContainer>
+      </S.OptionsContainer>
 
       {isCartHidden ? null : <CartDropdown />}
-    </HeaderContainer>
+    </S.HeaderContainer>
   );
 };
 

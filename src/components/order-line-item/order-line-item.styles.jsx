@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
 export const LineItemContainer = styled.div`
-  margin-top: 16px;
   display: flex;
+  margin-top: 2px;
+  padding: 10px;
+  background-color: #eee;
 
   &:first-child {
     margin-top: 0;

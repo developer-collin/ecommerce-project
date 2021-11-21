@@ -1,11 +1,7 @@
 import React from 'react';
 import lostInSpaceImg from '../../assets/error-lost-in-space.png';
 
-import {
-  ErrorImageOverlay,
-  ErrorImageContainer,
-  ErrorImageText
-} from './error-boundary.styles';
+import * as S from './error-boundary.styles';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -27,12 +23,12 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return(
-        <ErrorImageOverlay>
-          <ErrorImageContainer imageUrl={lostInSpaceImg} />
-          <ErrorImageText>
+        <S.ErrorImageOverlay>
+          <S.ErrorImageContainer imageUrl={lostInSpaceImg} />
+          <S.ErrorImageText>
             Sorry, something went wrong.
-          </ErrorImageText>
-        </ErrorImageOverlay>
+          </S.ErrorImageText>
+        </S.ErrorImageOverlay>
       );
     }
 

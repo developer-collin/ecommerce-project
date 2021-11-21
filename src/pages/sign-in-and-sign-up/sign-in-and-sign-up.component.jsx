@@ -6,7 +6,7 @@ import { selectCurrentUser } from '../../redux/user/user.selectors';
 import SignIn from '../../components/sign-in/sign-in.component';
 import SignUp from '../../components/sign-up/sign-up.component';
 
-import { SignInAndSignUpContainer } from './sign-in-and-sign-up.styles';
+import * as S from './sign-in-and-sign-up.styles';
 
 const SignInAndSignUp = () => {
   const currentUser = useSelector(selectCurrentUser);
@@ -18,10 +18,10 @@ const SignInAndSignUp = () => {
   }
 
   return (
-    <SignInAndSignUpContainer>
+    <S.SignInAndSignUpContainer>
       <SignIn />
       <SignUp />
-    </SignInAndSignUpContainer>
+    </S.SignInAndSignUpContainer>
   );
 };
 
